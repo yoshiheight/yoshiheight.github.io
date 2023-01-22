@@ -1,0 +1,13 @@
+@charset "utf-8";
+
+/* ====================== タグ ====================== */
+
+.sdc-primary-tag1 > a {
+    background-color: lightsteelblue;
+}
+
+.sdc-primary-tag2 > a {
+    background-color: white;
+    outline: #c0c0c0 solid 1px;
+    outline-offset: -1px;
+}

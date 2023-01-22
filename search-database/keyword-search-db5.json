@@ -1,0 +1,605 @@
+[{
+  "url": "/articles/test-090/",
+  "date": "9999-12-31",
+  "title": "これは\u003Cbr\u003Eテスト用の記事です 090",
+  "category": {
+    "order": 9,
+    "name": "Test\u0027s",
+    "url": "/categories/tests/"
+  },
+  "tags": [
+    {
+      "name": "Test\u0027s",
+      "url": "/tags/tests/"
+    },
+    {
+      "name": "Test\u0027s",
+      "url": "/tags/tests/"
+    },
+    {
+      "name": "Dummy",
+      "url": "/tags/dummy/"
+    },
+    {
+      "name": "Dummy\u0027s Data",
+      "url": "/tags/dummysdata/"
+    },
+    {
+      "name": "Dummy",
+      "url": "/tags/dummy/"
+    },
+    {
+      "name": "Dummy",
+      "url": "/tags/dummy/"
+    },
+    {
+      "name": "visualSTU DIO",
+      "url": "/tags/visualstudio/"
+    },
+    {
+      "name": "これはデバッグタグ",
+      "url": "/tags/726de66c2399b98644b164bc793c7cdda7068938/"
+    }
+  ],
+  "content": "テスト見出し テスト項目１ テスト項目２ これはC# 11.0で開発。フロントエンドはTypeScript 4.9を使用。 Stay hungry, stay foolish https://visualstudio.microsoft.com/ class Program { void Main() { Console.WriteLine(Hello, World!); } }"
+},{
+  "url": "/articles/test-091/",
+  "date": "9999-12-31",
+  "title": "これは\u003Cbr\u003Eテスト用の記事です 091",
+  "category": {
+    "order": 9,
+    "name": "Test\u0027s",
+    "url": "/categories/tests/"
+  },
+  "tags": [
+    {
+      "name": "Test\u0027s",
+      "url": "/tags/tests/"
+    },
+    {
+      "name": "Test\u0027s",
+      "url": "/tags/tests/"
+    },
+    {
+      "name": "Dummy",
+      "url": "/tags/dummy/"
+    },
+    {
+      "name": "Dummy\u0027s Data",
+      "url": "/tags/dummysdata/"
+    },
+    {
+      "name": "Dummy",
+      "url": "/tags/dummy/"
+    },
+    {
+      "name": "Dummy",
+      "url": "/tags/dummy/"
+    },
+    {
+      "name": "visualSTU DIO",
+      "url": "/tags/visualstudio/"
+    },
+    {
+      "name": "これはデバッグタグ",
+      "url": "/tags/726de66c2399b98644b164bc793c7cdda7068938/"
+    }
+  ],
+  "content": "テスト見出し テスト項目１ テスト項目２ これはC# 11.0で開発。フロントエンドはTypeScript 4.9を使用。 Stay hungry, stay foolish https://visualstudio.microsoft.com/ class Program { void Main() { Console.WriteLine(Hello, World!); } }"
+},{
+  "url": "/articles/test-092/",
+  "date": "9999-12-31",
+  "title": "これは\u003Cbr\u003Eテスト用の記事です 092",
+  "category": {
+    "order": 9,
+    "name": "Test\u0027s",
+    "url": "/categories/tests/"
+  },
+  "tags": [
+    {
+      "name": "Test\u0027s",
+      "url": "/tags/tests/"
+    },
+    {
+      "name": "Test\u0027s",
+      "url": "/tags/tests/"
+    },
+    {
+      "name": "Dummy",
+      "url": "/tags/dummy/"
+    },
+    {
+      "name": "Dummy\u0027s Data",
+      "url": "/tags/dummysdata/"
+    },
+    {
+      "name": "Dummy",
+      "url": "/tags/dummy/"
+    },
+    {
+      "name": "Dummy",
+      "url": "/tags/dummy/"
+    },
+    {
+      "name": "visualSTU DIO",
+      "url": "/tags/visualstudio/"
+    },
+    {
+      "name": "これはデバッグタグ",
+      "url": "/tags/726de66c2399b98644b164bc793c7cdda7068938/"
+    }
+  ],
+  "content": "テスト見出し テスト項目１ テスト項目２ これはC# 11.0で開発。フロントエンドはTypeScript 4.9を使用。 Stay hungry, stay foolish https://visualstudio.microsoft.com/ class Program { void Main() { Console.WriteLine(Hello, World!); } }"
+},{
+  "url": "/articles/test-093/",
+  "date": "9999-12-31",
+  "title": "これは\u003Cbr\u003Eテスト用の記事です 093",
+  "category": {
+    "order": 9,
+    "name": "Test\u0027s",
+    "url": "/categories/tests/"
+  },
+  "tags": [
+    {
+      "name": "Test\u0027s",
+      "url": "/tags/tests/"
+    },
+    {
+      "name": "Test\u0027s",
+      "url": "/tags/tests/"
+    },
+    {
+      "name": "Dummy",
+      "url": "/tags/dummy/"
+    },
+    {
+      "name": "Dummy\u0027s Data",
+      "url": "/tags/dummysdata/"
+    },
+    {
+      "name": "Dummy",
+      "url": "/tags/dummy/"
+    },
+    {
+      "name": "Dummy",
+      "url": "/tags/dummy/"
+    },
+    {
+      "name": "visualSTU DIO",
+      "url": "/tags/visualstudio/"
+    },
+    {
+      "name": "これはデバッグタグ",
+      "url": "/tags/726de66c2399b98644b164bc793c7cdda7068938/"
+    }
+  ],
+  "content": "テスト見出し テスト項目１ テスト項目２ これはC# 11.0で開発。フロントエンドはTypeScript 4.9を使用。 Stay hungry, stay foolish https://visualstudio.microsoft.com/ class Program { void Main() { Console.WriteLine(Hello, World!); } }"
+},{
+  "url": "/articles/test-094/",
+  "date": "9999-12-31",
+  "title": "これは\u003Cbr\u003Eテスト用の記事です 094",
+  "category": {
+    "order": 9,
+    "name": "Test\u0027s",
+    "url": "/categories/tests/"
+  },
+  "tags": [
+    {
+      "name": "Test\u0027s",
+      "url": "/tags/tests/"
+    },
+    {
+      "name": "Test\u0027s",
+      "url": "/tags/tests/"
+    },
+    {
+      "name": "Dummy",
+      "url": "/tags/dummy/"
+    },
+    {
+      "name": "Dummy\u0027s Data",
+      "url": "/tags/dummysdata/"
+    },
+    {
+      "name": "Dummy",
+      "url": "/tags/dummy/"
+    },
+    {
+      "name": "Dummy",
+      "url": "/tags/dummy/"
+    },
+    {
+      "name": "visualSTU DIO",
+      "url": "/tags/visualstudio/"
+    },
+    {
+      "name": "これはデバッグタグ",
+      "url": "/tags/726de66c2399b98644b164bc793c7cdda7068938/"
+    }
+  ],
+  "content": "テスト見出し テスト項目１ テスト項目２ これはC# 11.0で開発。フロントエンドはTypeScript 4.9を使用。 Stay hungry, stay foolish https://visualstudio.microsoft.com/ class Program { void Main() { Console.WriteLine(Hello, World!); } }"
+},{
+  "url": "/articles/test-095/",
+  "date": "9999-12-31",
+  "title": "これは\u003Cbr\u003Eテスト用の記事です 095",
+  "category": {
+    "order": 9,
+    "name": "Test\u0027s",
+    "url": "/categories/tests/"
+  },
+  "tags": [
+    {
+      "name": "Test\u0027s",
+      "url": "/tags/tests/"
+    },
+    {
+      "name": "Test\u0027s",
+      "url": "/tags/tests/"
+    },
+    {
+      "name": "Dummy",
+      "url": "/tags/dummy/"
+    },
+    {
+      "name": "Dummy\u0027s Data",
+      "url": "/tags/dummysdata/"
+    },
+    {
+      "name": "Dummy",
+      "url": "/tags/dummy/"
+    },
+    {
+      "name": "Dummy",
+      "url": "/tags/dummy/"
+    },
+    {
+      "name": "visualSTU DIO",
+      "url": "/tags/visualstudio/"
+    },
+    {
+      "name": "これはデバッグタグ",
+      "url": "/tags/726de66c2399b98644b164bc793c7cdda7068938/"
+    }
+  ],
+  "content": "テスト見出し テスト項目１ テスト項目２ これはC# 11.0で開発。フロントエンドはTypeScript 4.9を使用。 Stay hungry, stay foolish https://visualstudio.microsoft.com/ class Program { void Main() { Console.WriteLine(Hello, World!); } }"
+},{
+  "url": "/articles/test-096/",
+  "date": "9999-12-31",
+  "title": "これは\u003Cbr\u003Eテスト用の記事です 096",
+  "category": {
+    "order": 9,
+    "name": "Test\u0027s",
+    "url": "/categories/tests/"
+  },
+  "tags": [
+    {
+      "name": "Test\u0027s",
+      "url": "/tags/tests/"
+    },
+    {
+      "name": "Test\u0027s",
+      "url": "/tags/tests/"
+    },
+    {
+      "name": "Dummy",
+      "url": "/tags/dummy/"
+    },
+    {
+      "name": "Dummy\u0027s Data",
+      "url": "/tags/dummysdata/"
+    },
+    {
+      "name": "Dummy",
+      "url": "/tags/dummy/"
+    },
+    {
+      "name": "Dummy",
+      "url": "/tags/dummy/"
+    },
+    {
+      "name": "visualSTU DIO",
+      "url": "/tags/visualstudio/"
+    },
+    {
+      "name": "これはデバッグタグ",
+      "url": "/tags/726de66c2399b98644b164bc793c7cdda7068938/"
+    }
+  ],
+  "content": "テスト見出し テスト項目１ テスト項目２ これはC# 11.0で開発。フロントエンドはTypeScript 4.9を使用。 Stay hungry, stay foolish https://visualstudio.microsoft.com/ class Program { void Main() { Console.WriteLine(Hello, World!); } }"
+},{
+  "url": "/articles/test-097/",
+  "date": "9999-12-31",
+  "title": "これは\u003Cbr\u003Eテスト用の記事です 097",
+  "category": {
+    "order": 9,
+    "name": "Test\u0027s",
+    "url": "/categories/tests/"
+  },
+  "tags": [
+    {
+      "name": "Test\u0027s",
+      "url": "/tags/tests/"
+    },
+    {
+      "name": "Test\u0027s",
+      "url": "/tags/tests/"
+    },
+    {
+      "name": "Dummy",
+      "url": "/tags/dummy/"
+    },
+    {
+      "name": "Dummy\u0027s Data",
+      "url": "/tags/dummysdata/"
+    },
+    {
+      "name": "Dummy",
+      "url": "/tags/dummy/"
+    },
+    {
+      "name": "Dummy",
+      "url": "/tags/dummy/"
+    },
+    {
+      "name": "visualSTU DIO",
+      "url": "/tags/visualstudio/"
+    },
+    {
+      "name": "これはデバッグタグ",
+      "url": "/tags/726de66c2399b98644b164bc793c7cdda7068938/"
+    }
+  ],
+  "content": "テスト見出し テスト項目１ テスト項目２ これはC# 11.0で開発。フロントエンドはTypeScript 4.9を使用。 Stay hungry, stay foolish https://visualstudio.microsoft.com/ class Program { void Main() { Console.WriteLine(Hello, World!); } }"
+},{
+  "url": "/articles/test-098/",
+  "date": "9999-12-31",
+  "title": "これは\u003Cbr\u003Eテスト用の記事です 098",
+  "category": {
+    "order": 9,
+    "name": "Test\u0027s",
+    "url": "/categories/tests/"
+  },
+  "tags": [
+    {
+      "name": "Test\u0027s",
+      "url": "/tags/tests/"
+    },
+    {
+      "name": "Test\u0027s",
+      "url": "/tags/tests/"
+    },
+    {
+      "name": "Dummy",
+      "url": "/tags/dummy/"
+    },
+    {
+      "name": "Dummy\u0027s Data",
+      "url": "/tags/dummysdata/"
+    },
+    {
+      "name": "Dummy",
+      "url": "/tags/dummy/"
+    },
+    {
+      "name": "Dummy",
+      "url": "/tags/dummy/"
+    },
+    {
+      "name": "visualSTU DIO",
+      "url": "/tags/visualstudio/"
+    },
+    {
+      "name": "これはデバッグタグ",
+      "url": "/tags/726de66c2399b98644b164bc793c7cdda7068938/"
+    }
+  ],
+  "content": "テスト見出し テスト項目１ テスト項目２ これはC# 11.0で開発。フロントエンドはTypeScript 4.9を使用。 Stay hungry, stay foolish https://visualstudio.microsoft.com/ class Program { void Main() { Console.WriteLine(Hello, World!); } }"
+},{
+  "url": "/articles/test-099/",
+  "date": "9999-12-31",
+  "title": "これは\u003Cbr\u003Eテスト用の記事です 099",
+  "category": {
+    "order": 9,
+    "name": "Test\u0027s",
+    "url": "/categories/tests/"
+  },
+  "tags": [
+    {
+      "name": "Test\u0027s",
+      "url": "/tags/tests/"
+    },
+    {
+      "name": "Test\u0027s",
+      "url": "/tags/tests/"
+    },
+    {
+      "name": "Dummy",
+      "url": "/tags/dummy/"
+    },
+    {
+      "name": "Dummy\u0027s Data",
+      "url": "/tags/dummysdata/"
+    },
+    {
+      "name": "Dummy",
+      "url": "/tags/dummy/"
+    },
+    {
+      "name": "Dummy",
+      "url": "/tags/dummy/"
+    },
+    {
+      "name": "visualSTU DIO",
+      "url": "/tags/visualstudio/"
+    },
+    {
+      "name": "これはデバッグタグ",
+      "url": "/tags/726de66c2399b98644b164bc793c7cdda7068938/"
+    }
+  ],
+  "content": "テスト見出し テスト項目１ テスト項目２ これはC# 11.0で開発。フロントエンドはTypeScript 4.9を使用。 Stay hungry, stay foolish https://visualstudio.microsoft.com/ class Program { void Main() { Console.WriteLine(Hello, World!); } }"
+},{
+  "url": "/articles/3aef3dc23cbe4f27b736baab57f2cb04/",
+  "date": "2020-06-18",
+  "title": "[C#] 基底クラスが明示的に実装するインターフェイスを派生クラスでも実装できてしまう",
+  "category": {
+    "order": 2,
+    "name": "Scrap",
+    "url": "/categories/scrap/"
+  },
+  "tags": [
+    {
+      "name": "C#",
+      "url": "/tags/cs/"
+    }
+  ],
+  "content": "概要 基底クラスと派生クラスで、同じインターフェイスを明示的に実装できてしまいます。コンパイル時に警告はでません。 この場合、派生クラス側が呼び出されます。 ソースコード using System; class Program { static void Main() { IHoge hoge = new Derived(); hoge.Write(); // Derived.Write() } } interface IHoge { void Write(); } class Base : IHoge { void IHoge.Write() { Console.WriteLine(Base.Write()); } } class Derived : Base, IHoge { void IHoge.Write() { Console.WriteLine(Derived.Write()); } }"
+},{
+  "url": "/articles/0e2549ccc8914c358172b5a12ddd9c6f/",
+  "date": "2020-06-17",
+  "title": "[C#] Marshal.PtrToStructure[T](IntPtr, T)は参照型専用",
+  "category": {
+    "order": 2,
+    "name": "Scrap",
+    "url": "/categories/scrap/"
+  },
+  "tags": [
+    {
+      "name": "C#",
+      "url": "/tags/cs/"
+    }
+  ],
+  "content": "はじめに Marshal.PtrToStructure\u003CT\u003E(IntPtr, T)はデータの格納先となる第2引数がT型の値渡しになっており、当然といえば当然ですが参照型専用のメソッドです。 値型を渡すと実行時に例外が発生します。 この場合の参照型とは、StructLayout属性を指定したクラスになります。 ソースコード using System; using System.Runtime.InteropServices; class Program { static void Main() { Hoge? hoge = null; var ptr = Marshal.AllocHGlobal(Marshal.SizeOfHoge()); try { unsafe { var p = (byte*)ptr; p[0] = 123; p[1] = 234; p \u002B= 2; *(int*)p = 68000; } hoge = new Hoge(); Marshal.PtrToStructure(ptr, hoge); } finally { Marshal.FreeHGlobal(ptr); } Console.WriteLine(hoge.foo); // 123 Console.WriteLine(hoge.bar); // 234 Console.WriteLine(hoge.piyo); // 68000 } } [StructLayout(LayoutKind.Sequential, Pack = 1)] sealed class Hoge { public byte foo; public byte bar; public int piyo; } おわりに 参照型専用であれば、型制約を付けておいてほしいところですが、付いてないです。なぜでしょうか。。"
+},{
+  "url": "/articles/70187e20ef54497eb816fa8345b90f62/",
+  "date": "2020-06-16",
+  "title": "[C#] ボックス化された構造体のメモリを直接書き換える",
+  "category": {
+    "order": 2,
+    "name": "Scrap",
+    "url": "/categories/scrap/"
+  },
+  "tags": [
+    {
+      "name": "C#",
+      "url": "/tags/cs/"
+    }
+  ],
+  "content": "はじめに GCHandleを使った遊びです。 ボックス化された構造体をアンボックス化前に読み書きすることは通常はできないですが、GCHandleを使って直接メモリにアクセスすることで実現可能です。 ソースコード using System; using System.Runtime.InteropServices; class Program { static void Main() { object boxedObj = new Hoge(); var handle = GCHandle.Alloc(boxedObj, GCHandleType.Pinned); try { unsafe { var p = (byte*)handle.AddrOfPinnedObject(); p[0] = 123; p[1] = 234; p \u002B= 2; *(int*)p = 68000; } } finally { handle.Free(); } var unboxedHoge = (Hoge)boxedObj; Console.WriteLine(unboxedHoge.foo); // 123 Console.WriteLine(unboxedHoge.bar); // 234 Console.WriteLine(unboxedHoge.piyo); // 68000 } } [StructLayout(LayoutKind.Sequential, Pack = 1)] struct Hoge { public byte foo; public byte bar; public int piyo; } おわりに やはりポインタ操作はワクワクしますね！"
+},{
+  "url": "/articles/ab51e06a45444006810286b95be95970/",
+  "date": "2020-06-15",
+  "title": "[C#] オプション引数と可変長引数の落とし穴",
+  "category": {
+    "order": 2,
+    "name": "Scrap",
+    "url": "/categories/scrap/"
+  },
+  "tags": [
+    {
+      "name": "C#",
+      "url": "/tags/cs/"
+    }
+  ],
+  "content": "概要 落とし穴というか、実際にはこういうコードは書いちゃダメという話です。 個人的にはオプション引数や可変長引数はあまり好きではないです。 極端にいえばオーバーロードもあまり好きではなく、実際には、 引数用の構造体を用意した方がいい 引数が違うということは、そもそもメソッド名を変えた方がいい というケースが多いです。 ソースコード 通常のメソッド／オプション引数のメソッド／可変長引数のメソッドで、同じシグネチャとして解釈できるコードと実行時の挙動 using System; class Program { static void Main() { Test(); // 出力：Test() Test(100); // 出力：Test(int) Test(100, 200); // 出力：Test(params int[]) } static void Test() { Console.WriteLine(Test()); } static void Test(int num = 0) { Console.WriteLine(Test(int)); } static void Test(params int[] nums) { Console.WriteLine(Test(params int[])); } } インターフェイス／抽象クラス／派生クラスで、同じメソッドにオプション引数を使用したコードと実行時の挙動 using System; class Program { static void Main() { var hoge = new HogeDerived(); (hoge as IHoge).Test(); // 出力：0 (hoge as HogeBase).Test(); // 出力：100 hoge.Test(); // 出力：999 } } interface IHoge { void Test(int num = 0); } abstract class HogeBase : IHoge { public abstract void Test(int num = 100); } class HogeDerived : HogeBase { public override void Test(int num = 999) { Console.WriteLine(num); } }"
+},{
+  "url": "/articles/67ff5d3851ef498a9175879d5d16105c/",
+  "date": "2020-06-12",
+  "title": "[C#] Blazor WebAssemblyでGUIDを生成して表示するだけ",
+  "category": {
+    "order": 0,
+    "name": "Demo",
+    "url": "/categories/demo/"
+  },
+  "tags": [
+    {
+      "name": "C#",
+      "url": "/tags/cs/"
+    },
+    {
+      "name": "Blazor",
+      "url": "/tags/blazor/"
+    },
+    {
+      "name": "WebAssembly",
+      "url": "/tags/webassembly/"
+    },
+    {
+      "name": "ASP.NET Core",
+      "url": "/tags/aspnetcore/"
+    }
+  ],
+  "content": "デモ https://crash.jp/apps/guidgenerator/"
+},{
+  "url": "/articles/3dfc4bf66bc94bd38cadd67f3b51d3db/",
+  "date": "2020-06-11",
+  "title": "[C#] Blazor WebAssemblyがキャッシュしたDLLの削除方法",
+  "category": {
+    "order": 2,
+    "name": "Scrap",
+    "url": "/categories/scrap/"
+  },
+  "tags": [
+    {
+      "name": "C#",
+      "url": "/tags/cs/"
+    },
+    {
+      "name": "Blazor",
+      "url": "/tags/blazor/"
+    },
+    {
+      "name": "WebAssembly",
+      "url": "/tags/webassembly/"
+    },
+    {
+      "name": "ASP.NET Core",
+      "url": "/tags/aspnetcore/"
+    }
+  ],
+  "content": "キャッシュの削除方法 Blazor WebAssembly がキャッシュした DLL は Cache API を使用して保存されているので、以下の方法で削除できます。 例）Chrome 開発ツールを開く Application タブへ移動 Cache \u003E Cache Storage の中から該当するものを削除"
+},{
+  "url": "/articles/8076c162d46a4729ad45a3519b63b1bf/",
+  "date": "2020-06-10",
+  "title": "CanvasRenderingContext2Dに対する描画は同期的には画面表示されない",
+  "category": {
+    "order": 2,
+    "name": "Scrap",
+    "url": "/categories/scrap/"
+  },
+  "tags": [
+    {
+      "name": "2D",
+      "url": "/tags/2d/"
+    },
+    {
+      "name": "JavaScript",
+      "url": "/tags/javascript/"
+    },
+    {
+      "name": "Web全般",
+      "url": "/tags/general-web/"
+    }
+  ],
+  "content": "CanvasRenderingContext2D に対する描画について HTML の Canvas は、JavaScript で CanvasRenderingContext2D を取得して使用することで 2D 描画が可能ですが、 その描画は即座には画面表示に反映されません。 マウス移動イベントやタイマーイベント等の短い間隔で負荷の高い描画を行うと、描画内容の変化が滑らかに画面表示されないので、 その場合は window.requestAnimationFrame を使用して描画すると解決します。"
+},{
+  "url": "/articles/9accd8bd449647bcaacf0e5909ef74a6/",
+  "date": "2020-06-09",
+  "title": "[C#] PLINQのSelectを試す",
+  "category": {
+    "order": 2,
+    "name": "Scrap",
+    "url": "/categories/scrap/"
+  },
+  "tags": [
+    {
+      "name": "C#",
+      "url": "/tags/cs/"
+    },
+    {
+      "name": "PLINQ",
+      "url": "/tags/plinq/"
+    }
+  ],
+  "content": "概要 普段ほとんど使う機会のない PLINQ を、Select だけ試してみました。 ソースコード using System; using System.Linq; using System.Threading; #nullable enable class Program { static void Main() { var query = new[] { 4, 2, 1, 3 } .AsParallel() //.AsOrdered() .Select(n = { n *= 1000; Thread.Sleep(n); return n; }); foreach (var n in query) { Console.WriteLine(n); } // 実行結果： // 1000 ....... 1秒後 // 2000 ....... 2秒後 // 3000 ....... 3秒後 // 4000 ....... 4秒後 // 実行結果： AsOrdered()を使用した場合 // 4000 ....... 4秒後 // 2000 ....... 4秒後 // 1000 ....... 4秒後 // 3000 ....... 4秒後 } }"
+}]

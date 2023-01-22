@@ -1,0 +1,24 @@
+@charset "utf-8";
+
+/* ===================== 記事一覧 ===================== */
+
+.sdc-article-list-date {
+    font-size: 80%;
+    color: rgba(0,0,0,0.6);
+}
+
+.sdc-article-list-title {
+    font-size: 130%;
+    font-weight: bold;
+}
+
+.sdc-article-list-tags {
+    font-size: 78%;
+    margin-top: 1px;
+    margin-bottom: 3px;
+}
+
+.sdc-article-list-summary {
+    font-size: 85%;
+    margin-top: 0.2em;
+}

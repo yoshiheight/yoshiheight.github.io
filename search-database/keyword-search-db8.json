@@ -1,0 +1,81 @@
+[{
+  "url": "/articles/cf8e618370ab439c99b273f9158eba44/",
+  "date": "2019-10-08",
+  "title": "[C#] yieldを使用したメソッドを逆コンパイルしてみた",
+  "category": {
+    "order": 2,
+    "name": "Scrap",
+    "url": "/categories/scrap/"
+  },
+  "tags": [
+    {
+      "name": "C#",
+      "url": "/tags/cs/"
+    }
+  ],
+  "content": "はじめに 以下のコードを逆コンパイルしてみました。 class Sample { public IEnumerableint GetNums() { yield return 1; yield return 2; yield return 3; } } 環境 .NET Core 3.0 / C# 8.0 逆コンパイル internal class Sample { [CompilerGenerated] private sealed class GetNumsd__0 : IEnumerableint, IEnumerable, IEnumeratorint, IEnumerator, IDisposable { private int 1__state; private int 2__current; private int l__initialThreadId; int IEnumeratorint.Current { [DebuggerHidden] get { return 2__current; } } object IEnumerator.Current { [DebuggerHidden] [return: System.Runtime.CompilerServices.Nullable(2)] get { return 2__current; } } [DebuggerHidden] public GetNumsd__0(int 1__state) { this.1__state = 1__state; l__initialThreadId = Environment.CurrentManagedThreadId; } [DebuggerHidden] void IDisposable.Dispose() { } private bool MoveNext() { switch (1__state) { default: return false; case 0: 1__state = -1; 2__current = 1; 1__state = 1; return true; case 1: 1__state = -1; 2__current = 2; 1__state = 2; return true; case 2: 1__state = -1; 2__current = 3; 1__state = 3; return true; case 3: 1__state = -1; return false; } } bool IEnumerator.MoveNext() { //ILSpy generated this explicit interface implementation from .override directive in MoveNext return this.MoveNext(); } [DebuggerHidden] void IEnumerator.Reset() { throw new NotSupportedException(); } [DebuggerHidden] [return: System.Runtime.CompilerServices.Nullable(1)] IEnumeratorint IEnumerableint.GetEnumerator() { if (1__state == -2 l__initialThreadId == Environment.CurrentManagedThreadId) { 1__state = 0; return this; } return new GetNumsd__0(0); } [DebuggerHidden] [return: System.Runtime.CompilerServices.Nullable(1)] IEnumerator IEnumerable.GetEnumerator() { return ((IEnumerableint)this).GetEnumerator(); } } [System.Runtime.CompilerServices.NullableContext(1)] [IteratorStateMachine(typeof(GetNumsd__0))] public IEnumerableint GetNums() { return new GetNumsd__0(-2); } } まとめ 以下のインナークラスが定義され、 private sealed class GetNumsd__0 : IEnumerableint, IEnumerable, IEnumeratorint, IEnumerator, IDisposable GetNums()メソッドで戻り値としてnewされていました。 public IEnumerableint GetNums() { return new GetNumsd__0(-2); }"
+},{
+  "url": "/articles/cd1787b5df934eaf81c81f44f3b91cd5/",
+  "date": "2019-10-07",
+  "title": "[C#] クロージャやデリゲートは暗黙的にインスタンス生成されるので注意",
+  "category": {
+    "order": 2,
+    "name": "Scrap",
+    "url": "/categories/scrap/"
+  },
+  "tags": [
+    {
+      "name": "C#",
+      "url": "/tags/cs/"
+    }
+  ],
+  "content": "はじめに クロージャやデリゲートを使用した場合、実際にはインスタンスがヒープ上に確保されています。 クロージャ（ローカル変数をキャプチャする匿名関数/ローカル関数） ローカル変数をキャプチャすると、その変数をフィールドに持つクラスが自動的に定義され、そのインスタンスが暗黙的に生成される デリゲート 匿名関数や通常のメソッドをデリゲート変数に代入すると、デリゲートのインスタンスが暗黙的に生成される パフォーマンス的に問題ない場合は特に対応は不要ですが、インスタンス生成されていることは意識しておいた方がいいです。 また、コンパイラによって最適化されるケースもあるらしいので、ufcppさんの記事を参考に確認してみました。 [雑記] 匿名関数のコンパイル結果 https://ufcpp.net/study/csharp/sp2_anonymousmethod.html [雑記] デリゲートの内部 https://ufcpp.net/study/csharp/functional/miscdelegateinternal/ 環境は以下。 .NET Core 3.0 / C# 8.0 ILSpy（逆コンパイルツール） https://github.com/icsharpcode/ILSpy ILSpy起動後、ツールバーの言語バージョン選択で「C# 1.0 / VS.NET」を指定 クロージャに対して最適化が行われるケース1 ローカル関数のクロージャで且つデリゲートに代入せずに直接呼び出している場合、構造体を使用した最適化が行われるそうなので試してみました。 ソースコード using System; class Program { static void Main(string[] args) { var sample = new Sample(); sample.Test(10, あいうえ); } } class Sample { public void Test(int n, string str) { Update(); Console.WriteLine(n \u002B str); void Update() { n\u002B\u002B; str \u002B= お; } } } 逆コンパイル internal class Sample { [StructLayout(LayoutKind.Auto)] [CompilerGenerated] private struct c__DisplayClass0_0 { public int n; public string str; } public void Test(int n, string str) { c__DisplayClass0_0 c__DisplayClass0_ = default(c__DisplayClass0_0); c__DisplayClass0_.n = n; c__DisplayClass0_.str = str; Testg__Update|0_0(ref c__DisplayClass0_); Console.WriteLine(c__DisplayClass0_.n.ToString() \u002B c__DisplayClass0_.str); } [CompilerGenerated] private static void Testg__Update|0_0(ref c__DisplayClass0_0 P_0) { P_0.n\u002B\u002B; P_0.str \u002B= お; } } キャプチャした変数は構造体に格納され、その構造体はref渡しされるように最適化されていました。 クロージャに対して最適化が行われるケース2 同じスコープ内に複数の匿名関数がある場合、それらは同じクラスにまとめられるそうなので試してみました。 ソースコード using System; class Program { static void Main(string[] args) { var sample = new Sample(); sample.Test(); } } class Sample { public void Test() { var num = 0; Invoke(() = num \u002B= 10); Invoke(() = num \u002B= 100); } private void Invoke(Action action) { action(); } } 逆コンパイル internal class Sample { [CompilerGenerated] private sealed class c__DisplayClass0_0 { public int num; internal void Testb__0() { num \u002B= 10; } internal void Testb__1() { num \u002B= 100; } } public void Test() { int num = 0; c__DisplayClass0_0 @object; Invoke(new Action(@object.Testb__0)); Invoke(new Action(@object.Testb__1)); } private void Invoke(Action action) { action(); } } 複数の匿名関数が、同じクラスにまとめられていました。 デリゲートに対して最適化が行われるケース1 匿名関数が静的メソッドに展開可能な場合、シングルトンとして展開されるそうなので試してみました。 ソースコード using System; class Program { static void Main(string[] args) { var func1 = Sample.GetFunc(); var func2 = Sample.GetFunc(); Console.WriteLine(ReferenceEquals: \u002B ReferenceEquals(func1, func2)); } } class Sample { public static Funcint, int GetFunc() { return n = n * n; // (1) //return n = Squared(n); // (2) //return Squared; // (3) } private static int Squared(int n) { return n * n; } } 実行結果 (1)の場合 ReferenceEquals: True (2)の場合 ReferenceEquals: True (3)の場合 ReferenceEquals: False (1)と(2)は常に同じインスタンスを返していました。 逆コンパイル internal class Sample { [Serializable] [CompilerGenerated] private sealed class c { public static readonly c 9 = new c(); public static Funcint, int 9__0_0; internal int GetFuncb__0_0(int n) { return n * n; } } public static Funcint, int GetFunc() { return c.9__0_0 ?? (c.9__0_0 = new Funcint, int(c.9.GetFuncb__0_0)); } private static int Squared(int n) { return n * n; } } ufcppさんの記事によると、静的メソッドのデリゲートは効率が悪いそうで、最適化としてシングルトンとして展開され、更にデリゲート変数は静的フィールドで保持されていました。 但し、(3)のように静的メソッドを直接デリゲート変数に代入した場合、最適化は行われませんでした（なので、(2)のように匿名関数をはさんだ方が効率がいい）。 デリゲートに対して最適化が行われるケース2 いろいろ試していて気付いたケースです。 ループ中の匿名関数に対するデリゲートですが、その匿名関数がループ外のローカル変数をキャプチャしている場合、デリゲート変数を保持する最適化が行われていました （その匿名関数についてはインスタンスフィールドやインスタンスメソッドを使用している/いないは関係ない）。 ソースコード using System; using System.Collections.Generic; class Program { static void Main(string[] args) { var sample = new Sample(); sample.Test(); Console.WriteLine(ReferenceEquals: \u002B ReferenceEquals(sample.List1[0], sample.List1[1])); Console.WriteLine(ReferenceEquals: \u002B ReferenceEquals(sample.List2[0], sample.List2[1])); } } class Sample { public readonly ListAction List1 = new ListAction(); public readonly ListAction List2 = new ListAction(); public void Test() { var num = 0; for (var i = 0; i 2; i\u002B\u002B) { List1.Add(() = num \u002B= 10); List2.Add(() = num \u002B= 100); } } } 実行結果 ReferenceEquals: True ReferenceEquals: True 逆コンパイル internal class Sample { [CompilerGenerated] private sealed class c__DisplayClass2_0 { public int num; public Action 9__0; public Action 9__1; internal void Testb__0() { num \u002B= 10; } internal void Testb__1() { num \u002B= 100; } } public readonly ListAction List1 = new ListAction(); public readonly ListAction List2 = new ListAction(); public void Test() { int num = 0; for (int i = 0; i 2; i\u002B\u002B) { c__DisplayClass2_0 c__DisplayClass2_; Action action; List1.Add(c__DisplayClass2_.9__0 ?? (action = new Action(c__DisplayClass2_.Testb__0))); Action action2; List2.Add(c__DisplayClass2_.9__1 ?? (action2 = new Action(c__DisplayClass2_.Testb__1))); } } } ループ中でデリゲート変数を使い回すように最適化されていました。 但し、「ループ外のローカル変数のキャプチャ」という条件を満たさない場合、この最適化は行われませんでした。 その他、対策 自分が確認した限りでは、今回最適化が行われたケース以外については、自動的に最適化されることはありませんでした（将来的には分かりませんが）。 もし最適化に頼らず実装を明示的にしたい場合や、パフォーマンス的に問題になる場合、 不要なローカル変数のキャプチャは避ける デリゲート変数を保持して使い回す 等の対策をした方がいいです。 また .NET のクラスライブラリには、不要なローカル変数のキャプチャを回避する為のシグネチャが用意されているものがあります。 例えばConcurrentDictionary\u003CTKey, TValue\u003E.GetOrAddメソッドですが、以下のシグネチャがありますが、 1. TValue GetOrAdd(TKey key, TValue value) 2. TValue GetOrAdd(TKey key, FuncTKey, TValue valueFactory) 3. TValue GetOrAddTArg(TKey key, FuncTKey, TArg, TValue valueFactory, TArg factoryArgument) 値生成用のvalueFactoryに渡したいパラメータ（ローカル変数 or インスタンス変数）がある場合、 2ではなく3を使用することでfactoryArgumentでパラメータを渡す valueFactory自体は静的メソッドに展開可能な匿名関数にしておく とすることで、不要なローカル変数のキャプチャを回避でき、また最適化によってデリゲート変数も静的フィールドで保持されるので、 GetOrAdd呼び出し時に発生するクロージャやデリゲートのインスタンス生成を無くすことができます。 おわりに GCがある言語ではヒープの使用状況、確保/解放の負荷、断片化などについてあまり意識しなくなってきましたが、処理によってはパフォーマンスに影響がでる場合もあるので注意が必要です。"
+},{
+  "url": "/articles/e115432cfb1e4d7298e45c1d5f7e94d5/",
+  "date": "2019-10-06",
+  "title": "[C#] IDisposableをインターフェイスのデフォルト実装で処理してみた",
+  "category": {
+    "order": 2,
+    "name": "Scrap",
+    "url": "/categories/scrap/"
+  },
+  "tags": [
+    {
+      "name": "C#",
+      "url": "/tags/cs/"
+    }
+  ],
+  "content": "はじめに C# 8.0 でインターフェイスのデフォルト実装が可能になりました。 真っ先に思いついたのが IDisposable の実装で、うまくいったので記載します。 ソースコード using System; using System.Collections.Concurrent; using System.IO; using System.Linq; using System.Reflection; using System.Threading; #nullable enable class Program { static void Main() { using var sample = new SampleClass(); } } /// summary /// サンプルクラス。 /// /summary class SampleClass : IFieldAutoDisposable { public DisposeContext DisposeContext { get; } = new DisposeContext(); [DisposableField] private readonly MemoryStream _stream1 = new MemoryStream(); [field: DisposableField] public MemoryStream Stream2 { get; } = new MemoryStream(); } /// summary /// フィールドを自動破棄するデフォルト実装を持つインターフェイス。 /// /summary public interface IFieldAutoDisposable : IDisposable { /// summary破棄対象のメタデータのキャッシュ。/summary private static readonly ConcurrentDictionaryType, LazyTargetInfo[] _targetInfosTable = new ConcurrentDictionaryType, LazyTargetInfo[](); /// summary破棄コンテキスト。/summary DisposeContext DisposeContext { get; } /// summary /// 破棄処理。 /// /summary void IDisposable.Dispose() { if (Interlocked.CompareExchange(ref DisposeContext._disposedObject, this, null) == null) { DisposeFields(this); } } /// summary /// フィールドの自動破棄処理。 /// /summary private static void DisposeFields(object obj) { foreach (var targetInfo in GetTargetInfos(obj.GetType())) { var targetObj = targetInfo.FieldInfo.GetValue(obj); if (targetObj is IDisposable disposableObj) { disposableObj.Dispose(); } } // 破棄対象のメタデータの取得、キャッシュ static TargetInfo[] GetTargetInfos(Type type) { return _targetInfosTable.GetOrAdd(type, key = new LazyTargetInfo[](() = CreateTargetInfos(key))).Value; static TargetInfo[] CreateTargetInfos(Type type) { return type .GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly) .Select(fi = (fi, attr: fi.GetCustomAttributeDisposableFieldAttribute())) .Where(tuple = tuple.attr != null) .Select(tuple = new TargetInfo(tuple.fi, tuple.attr!)) .ToArray(); } } } /// summary /// 破棄対象のメタデータ。 /// /summary private sealed class TargetInfo { public FieldInfo FieldInfo { get; } public DisposableFieldAttribute FieldAttr { get; } public TargetInfo(FieldInfo fieldInfo, DisposableFieldAttribute fieldAttr) { FieldInfo = fieldInfo; FieldAttr = fieldAttr; } } } /// summary /// 破棄コンテキスト。 /// /summary public sealed class DisposeContext { internal volatile object? _disposedObject; public bool IsDisposed = _disposedObject != null; } /// summary /// 自動破棄するフィールドに指定する属性。 /// /summary [AttributeUsage(AttributeTargets.Field)] public sealed class DisposableFieldAttribute : Attribute { } おわりに 今回は対象の継承階層は考慮してませんが、本来は必要です。 あと、DisposableFieldAttribute に破棄する順序やグループも指定できるようにすると、より実用的だと思います。"
+},{
+  "url": "/articles/36eaaa325d5749ac95afdaba275e1916/",
+  "date": "2019-10-03",
+  "title": "[C#] 不変クラスを不変構造体に変更した際に修正が必要になった箇所",
+  "category": {
+    "order": 2,
+    "name": "Scrap",
+    "url": "/categories/scrap/"
+  },
+  "tags": [
+    {
+      "name": "C#",
+      "url": "/tags/cs/"
+    }
+  ],
+  "content": "はじめに intのフィールドを2つだけ持つ不変クラスを不変構造体に変更した際に少しハマったという話です。 前提 C# 8.0 で参照型をnull非許容とし、一通り警告はつぶしてある 不変クラスではEqualsとGetHashCodeのオーバーライド、IEquatable\u003CT\u003Eの実装、==と!=演算子のオーバーロードは実装済み object.ReferenceEqualsは使用していない 構造体にした際にボックス化が発生するような箇所はない default!で初期化している箇所（null非許容であっても初期値がnullになるような箇所）は把握済み 修正が必要だった箇所 不変構造体に変更後にバグが出ていて調査した結果、LINQのLastOrDefaultを使用している箇所でnullチェックしているのが原因でした。 メソッドの戻り値やout引数で「参照型でnull非許容」であってもデータが無い場合はnullになるのでnullチェック必須といった箇所があり、当然値型はnullではないので不具合が起きていました。 おわりに 今回は以下の拡張メソッドを自作して対応しました。 public static TElem? LastOrNullTElem(this IEnumerableTElem source) where TElem : class { return source.LastOrDefault(); } public static TElem? LastOrNullValueTElem(this IEnumerableTElem source) where TElem : struct { if (source is IListTElem list) { return (list.Count 0) ? list[list.Count - 1] : (TElem?)null; } TElem? result = null; foreach (var elem in source) { result = elem; } return result; } null非許容だとしても参照型と値型はそもそも異なるので注意が必要です。"
+},{
+  "url": "/articles/def677425dd6446f85a152c9b5958b33/",
+  "date": "2019-10-01",
+  "title": "[C#] Awaitableパターンを試してみた",
+  "category": {
+    "order": 2,
+    "name": "Scrap",
+    "url": "/categories/scrap/"
+  },
+  "tags": [
+    {
+      "name": "C#",
+      "url": "/tags/cs/"
+    }
+  ],
+  "content": "はじめに async/awaitで非同期的に呼び出す処理は自作可能なので、試してみました。 ソースコード .NET Core 3.0 で Windowsフォームアプリケーションを作成し、Control.BeginInvoke 経由でメソッドを呼び出す処理をawaitできるようにしてみます。 #nullable enable public partial class Form1 : Form { public Form1() { InitializeComponent(); } protected override void OnCreateControl() { base.OnCreateControl(); Debug.WriteLine(#OnCreateControl: start.); Test(); Debug.WriteLine(#OnCreateControl: end.); // SumAndToString メソッドを Control.BeginInvoke 経由で呼び出す実験 async void Test() { var result = await new Awaitablestring( (FuncIEnumerableint, string)SumAndToString, Enumerable.Range(1, 100)); Debug.WriteLine(#結果表示: \u002B result); } } private string SumAndToString(IEnumerableint nums) { return 合計 = \u002B nums.Sum(); } } public sealed class AwaitableTResult { private readonly AwaiterTResult _awaiter; public Awaitable(Delegate func, params object[] args) { _awaiter = new AwaiterTResult(func, args); } public AwaiterTResult GetAwaiter() { return _awaiter; } } public sealed class AwaiterTResult : INotifyCompletion { private readonly Delegate _func; private readonly object[] _args; private TResult _result = default!; public bool IsCompleted { get; private set; } public Awaiter(Delegate func, params object[] args) { _func = func; _args = args; } public void OnCompleted(Action continuation) { Application.OpenForms[0].BeginInvoke((Action)(() = { _result = (TResult)_func.DynamicInvoke(_args)!; IsCompleted = true; continuation.Invoke(); })); } public TResult GetResult() { // 例外が発生していた場合、その例外を保持しておいてここで throw すること return _result; } } 実行結果 意図した順序で呼び出されていることが確認できました。 #OnCreateControl: start. #OnCreateControl: end. #結果表示: 合計 = 5050 おわりに 後付けですが、以下がAwaitableパターンの必須条件なので、自前でインターフェイスを用意しておくと便利です。 public interface IAwaitableTResult { IAwaiterTResult GetAwaiter(); } public interface IAwaiterTResult : INotifyCompletion { bool IsCompleted { get; } TResult GetResult(); }"
+}]

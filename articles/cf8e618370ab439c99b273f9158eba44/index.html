@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    
+            <meta name="robots" content="noindex" />
+        
+    
+            <meta name="robots" content="nofollow" />
+        
+    <meta name="description" content="C#とTypeScriptに関することをメインに書いています。" />
+
+    <title>
+        
+                    [C#] yieldを使用したメソッドを逆コンパイルしてみた | Programmer&#39;s Note
+                
+    </title>
+
+    
+            <link rel="stylesheet" href="/sitegen-2.1.0/css/sitegen.css" />
+        
+            <link rel="stylesheet" href="/sitegen-2.1.0/css/sitegen-article.css" />
+        
+
+    <script type="module" src="/sitegen-2.1.0/js/initialize.js"></script>
+
+    
+    <link rel="icon" type="image/png" href="/images/favicon-32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/images/favicon-48.png" sizes="48x48" />
+    <link rel="icon" type="image/png" href="/images/favicon-64.png" sizes="64x64" />
+    <link rel="icon" type="image/png" href="/images/favicon-128.png" sizes="128x128" />
+    <link rel="icon" type="image/png" href="/images/favicon-256.png" sizes="256x256" />
+    <link rel="apple-touch-icon" href="/images/favicon-256.png" sizes="256x256" />
+    <link rel="stylesheet" href="/css/custom-1.0.css" />
+</head>
+<body>
+    <!-- サイトヘッダー -->
+    <header id="sdi-header">
+        <div id="sdi-header-inner">
+            <div id="sdi-site-name"><a href="/">Programmer&#39;s Note</a></div>
+            <div id="sdi-menu">
+                <div class="sdc-menu-section">
+                    
+                                            <div>
+                                                <a href="/categories/demo/">Demo</a>
+                                            </div>
+                                        
+                                            <div>
+                                                <a href="/categories/tech/">Tech</a>
+                                            </div>
+                                        
+                                            <div>
+                                                <a href="/categories/scrap/">Scrap</a>
+                                            </div>
+                                        
+                                            <div>
+                                                <a href="/categories/tests/">Test&#39;s</a>
+                                            </div>
+                                        
+                </div>
+                <div class="sdc-menu-section">
+                    <div>
+                        <a href="/tags/">Tags</a>
+                    </div>
+                    <div>
+                        <a href="/search/">Search</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <div id="sdi-container">
+        <div id="sdi-container-inner">
+            <main>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.6.0/build/styles/base16/nova.min.css" />
+<script type="module">
+    import hljs from "https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.6.0/build/es/highlight.min.js";
+    hljs.highlightAll();
+</script>
+<script type="module">
+    import mermaid from "https://unpkg.com/mermaid@9.1.3/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: true, theme: "base" });
+</script>
+
+<article id="sdi-entry-article">
+    <!-- 記事ヘッダー -->
+    <header>
+        <!-- 記事タイトル -->
+        <h1>[C#] yieldを使用したメソッドを逆コンパイルしてみた</h1>
+
+        <div id="sdi-article-header-annotation">
+            <!-- タグ -->
+            <div class="sdc-tags">
+                <div class="sdc-tag sdc-primary-tag sdc-primary-tag2">
+                    <a href="/categories/scrap/">Scrap</a>
+                </div>
+                
+                                    <div class="sdc-tag">
+                                        <a href="/tags/cs/">C#</a>
+                                    </div>
+                                
+            </div>
+
+            <!-- 日付 -->
+            <time datetime="2019-10-08">2019-10-08</time>
+        </div>
+    </header>
+
+    <!-- 記事内容 -->
+    <div id="sdi-article-body">
+<h3>はじめに</h3>
+<p>以下のコードを逆コンパイルしてみました。</p>
+<pre><code class="language-cs">class Sample
+{
+    public IEnumerable&lt;int&gt; GetNums()
+    {
+        yield return 1;
+        yield return 2;
+        yield return 3;
+    }
+}
+</code></pre>
+<ul>
+<li>環境
+<ul>
+<li>.NET Core 3.0 / C# 8.0</li>
+</ul>
+</li>
+</ul>
+<h3>逆コンパイル</h3>
+<pre><code class="language-cs">internal class Sample
+{
+    [CompilerGenerated]
+    private sealed class &lt;GetNums&gt;d__0 : IEnumerable&lt;int&gt;, IEnumerable, IEnumerator&lt;int&gt;, IEnumerator, IDisposable
+    {
+        private int &lt;&gt;1__state;
+
+        private int &lt;&gt;2__current;
+
+        private int &lt;&gt;l__initialThreadId;
+
+        int IEnumerator&lt;int&gt;.Current
+        {
+            [DebuggerHidden]
+            get
+            {
+                return &lt;&gt;2__current;
+            }
+        }
+
+        object IEnumerator.Current
+        {
+            [DebuggerHidden]
+            [return: System.Runtime.CompilerServices.Nullable(2)]
+            get
+            {
+                return &lt;&gt;2__current;
+            }
+        }
+
+        [DebuggerHidden]
+        public &lt;GetNums&gt;d__0(int &lt;&gt;1__state)
+        {
+            this.&lt;&gt;1__state = &lt;&gt;1__state;
+            &lt;&gt;l__initialThreadId = Environment.CurrentManagedThreadId;
+        }
+
+        [DebuggerHidden]
+        void IDisposable.Dispose()
+        {
+        }
+
+        private bool MoveNext()
+        {
+            switch (&lt;&gt;1__state)
+            {
+            default:
+                return false;
+            case 0:
+                &lt;&gt;1__state = -1;
+                &lt;&gt;2__current = 1;
+                &lt;&gt;1__state = 1;
+                return true;
+            case 1:
+                &lt;&gt;1__state = -1;
+                &lt;&gt;2__current = 2;
+                &lt;&gt;1__state = 2;
+                return true;
+            case 2:
+                &lt;&gt;1__state = -1;
+                &lt;&gt;2__current = 3;
+                &lt;&gt;1__state = 3;
+                return true;
+            case 3:
+                &lt;&gt;1__state = -1;
+                return false;
+            }
+        }
+
+        bool IEnumerator.MoveNext()
+        {
+            //ILSpy generated this explicit interface implementation from .override directive in MoveNext
+            return this.MoveNext();
+        }
+
+        [DebuggerHidden]
+        void IEnumerator.Reset()
+        {
+            throw new NotSupportedException();
+        }
+
+        [DebuggerHidden]
+        [return: System.Runtime.CompilerServices.Nullable(1)]
+        IEnumerator&lt;int&gt; IEnumerable&lt;int&gt;.GetEnumerator()
+        {
+            if (&lt;&gt;1__state == -2 &amp;&amp; &lt;&gt;l__initialThreadId == Environment.CurrentManagedThreadId)
+            {
+                &lt;&gt;1__state = 0;
+                return this;
+            }
+            return new &lt;GetNums&gt;d__0(0);
+        }
+
+        [DebuggerHidden]
+        [return: System.Runtime.CompilerServices.Nullable(1)]
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return ((IEnumerable&lt;int&gt;)this).GetEnumerator();
+        }
+    }
+
+    [System.Runtime.CompilerServices.NullableContext(1)]
+    [IteratorStateMachine(typeof(&lt;GetNums&gt;d__0))]
+    public IEnumerable&lt;int&gt; GetNums()
+    {
+        return new &lt;GetNums&gt;d__0(-2);
+    }
+}
+</code></pre>
+<h3>まとめ</h3>
+<p>以下のインナークラスが定義され、</p>
+<pre><code class="language-plaintext">private sealed class &lt;GetNums&gt;d__0 :
+    IEnumerable&lt;int&gt;,
+    IEnumerable,
+    IEnumerator&lt;int&gt;,
+    IEnumerator,
+    IDisposable
+</code></pre>
+<p><code>GetNums()</code>メソッドで戻り値として<code>new</code>されていました。</p>
+<pre><code class="language-cs">    public IEnumerable&lt;int&gt; GetNums()
+    {
+        return new &lt;GetNums&gt;d__0(-2);
+    }
+</code></pre>
+
+    </div>
+</article>
+            </main>
+        </div>
+    </div>
+
+    <!-- サイトフッター -->
+    <footer id="sdi-footer">
+        <div id="sdi-footer-inner">
+            
+            <!-- プロフィール -->
+            <div style="font-size: 115%; line-height: 1.1;">
+                <div style="display: flex;">
+                    <div style="flex-shrink: 0;">
+                        <img src="/images/favicon-128.png" style="margin-right: 20px; border: 2px solid #e4e4e4; border-radius: 50%;" />
+                    </div>
+                    <div style="padding-top: 5px;">
+                        <div style="display: flex; align-items: flex-end; flex-wrap: wrap; column-gap: 8px;">
+                            <div style="font-size: 110%;">Yoshiheight</div>
+                            <div>/</div>
+                            <div style="font-size: 90%;">Programmer</div>
+                        </div>
+                        <div style="margin: 0.5em 0;">C#とTypeScriptに関することをメインに書いています。</div>
+                        <div style="margin-top: 25px; text-decoration: underline;">
+                            <a href="https://github.com/yoshiheight">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; font-size: 98%;">
+                Generated by <a style="text-decoration: underline;" href="https://github.com/yoshiheight/Sitegen">Sitegen</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

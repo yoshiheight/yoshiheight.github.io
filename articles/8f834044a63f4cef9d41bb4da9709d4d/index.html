@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    
+            <meta name="robots" content="noindex" />
+        
+    
+            <meta name="robots" content="nofollow" />
+        
+    <meta name="description" content="C#とTypeScriptに関することをメインに書いています。" />
+
+    <title>
+        
+                    [C#] async／awaitについてざっくりと | Programmer&#39;s Note
+                
+    </title>
+
+    
+            <link rel="stylesheet" href="/sitegen-2.1.0/css/sitegen.css" />
+        
+            <link rel="stylesheet" href="/sitegen-2.1.0/css/sitegen-article.css" />
+        
+
+    <script type="module" src="/sitegen-2.1.0/js/initialize.js"></script>
+
+    
+    <link rel="icon" type="image/png" href="/images/favicon-32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/images/favicon-48.png" sizes="48x48" />
+    <link rel="icon" type="image/png" href="/images/favicon-64.png" sizes="64x64" />
+    <link rel="icon" type="image/png" href="/images/favicon-128.png" sizes="128x128" />
+    <link rel="icon" type="image/png" href="/images/favicon-256.png" sizes="256x256" />
+    <link rel="apple-touch-icon" href="/images/favicon-256.png" sizes="256x256" />
+    <link rel="stylesheet" href="/css/custom-1.0.css" />
+</head>
+<body>
+    <!-- サイトヘッダー -->
+    <header id="sdi-header">
+        <div id="sdi-header-inner">
+            <div id="sdi-site-name"><a href="/">Programmer&#39;s Note</a></div>
+            <div id="sdi-menu">
+                <div class="sdc-menu-section">
+                    
+                                            <div>
+                                                <a href="/categories/demo/">Demo</a>
+                                            </div>
+                                        
+                                            <div>
+                                                <a href="/categories/tech/">Tech</a>
+                                            </div>
+                                        
+                                            <div>
+                                                <a href="/categories/scrap/">Scrap</a>
+                                            </div>
+                                        
+                                            <div>
+                                                <a href="/categories/tests/">Test&#39;s</a>
+                                            </div>
+                                        
+                </div>
+                <div class="sdc-menu-section">
+                    <div>
+                        <a href="/tags/">Tags</a>
+                    </div>
+                    <div>
+                        <a href="/search/">Search</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <div id="sdi-container">
+        <div id="sdi-container-inner">
+            <main>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.6.0/build/styles/base16/nova.min.css" />
+<script type="module">
+    import hljs from "https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.6.0/build/es/highlight.min.js";
+    hljs.highlightAll();
+</script>
+<script type="module">
+    import mermaid from "https://unpkg.com/mermaid@9.1.3/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: true, theme: "base" });
+</script>
+
+<article id="sdi-entry-article">
+    <!-- 記事ヘッダー -->
+    <header>
+        <!-- 記事タイトル -->
+        <h1>[C#] async／awaitについてざっくりと</h1>
+
+        <div id="sdi-article-header-annotation">
+            <!-- タグ -->
+            <div class="sdc-tags">
+                <div class="sdc-tag sdc-primary-tag sdc-primary-tag2">
+                    <a href="/categories/scrap/">Scrap</a>
+                </div>
+                
+                                    <div class="sdc-tag">
+                                        <a href="/tags/cs/">C#</a>
+                                    </div>
+                                
+            </div>
+
+            <!-- 日付 -->
+            <time datetime="2019-10-11">2019-10-11</time>
+        </div>
+    </header>
+
+    <!-- 記事内容 -->
+    <div id="sdi-article-body">
+<h3>説明</h3>
+<p>今更ですが、<code>async/await</code>について。</p>
+<ul>
+<li>非同期処理の呼び出し側の利点
+<ul>
+<li>継続処理を同期的に書けるし、<code>try-catch</code>で例外捕捉できる</li>
+<li>同期コンテキストにより、継続処理や例外捕捉後の処理を呼び出し側スレッド上で実行できる</li>
+</ul>
+</li>
+<li>非同期メソッドは<code>async</code>を指定し、メソッド名のサフィックスは<code>Async</code>
+<ul>
+<li>戻り値は<code>Task</code>か<code>Task&lt;T&gt;</code>、もしくは同期的な処理のみで終わる場合もあるなら<code>ValueTask</code>か<code>ValueTask&lt;T&gt;</code></li>
+</ul>
+</li>
+<li><code>async void</code>なメソッドは、GUIアプリのイベントハンドラのように、待つ必要がない場合のみ使う
+<ul>
+<li><code>async void</code>なメソッドは<code>await</code>で待機できないので</li>
+</ul>
+</li>
+<li>同期コンテキストを使用する必要がない場合は、<code>Task.ConfigureAwait(false)</code>を呼び出しておく
+<ul>
+<li>その方が効率がいいのと、非同期メソッドを使う側で<code>Task.Wait()</code>されてもデッドロックしない</li>
+</ul>
+</li>
+<li>ライブラリ側でタスク開始する場合、リソース的に問題ないか要検討
+<ul>
+<li>スレッド数の調整やスケジューリングはアプリ側じゃないと正しく判断できないので</li>
+</ul>
+</li>
+</ul>
+<h3>ソースコード</h3>
+<p>環境は .NET Core 3.0 / C# 8.0</p>
+<pre><code class="language-cs">using System.Threading.Tasks;
+using System.Windows.Forms;
+
+#nullable enable
+
+namespace WindowsFormsApp1
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        protected override async void OnMouseDown(MouseEventArgs e)
+        {
+            base.OnMouseDown(e);
+
+            var result = await Sample.Test1Async();
+            Text = result.ToString();
+        }
+    }
+}
+
+static class Sample
+{
+    // パターン1
+    public static async Task&lt;int&gt; Test1Async()
+    {
+        await Task.Delay(100).ConfigureAwait(false);
+        await Task.Delay(200).ConfigureAwait(false);
+        return await Task.Factory.StartNew(() =&gt;
+        {
+            // なにかの重い処理...
+            return 0;
+        }).ConfigureAwait(false);
+    }
+
+    // パターン2
+    public static async Task&lt;int&gt; Test2Async()
+    {
+        await Task.Delay(100).ConfigureAwait(false);
+        await Task.Delay(200).ConfigureAwait(false);
+        await Task.Delay(300).ConfigureAwait(false);
+        return 0;
+    }
+
+    // 同期的な処理だけで返す場合があるパターン
+    public static async ValueTask&lt;int&gt; Test3Async(int value)
+    {
+        if (value &lt; 0)
+        {
+            return -1;
+        }
+
+        await Task.Delay(100).ConfigureAwait(false);
+        await Task.Delay(200).ConfigureAwait(false);
+        await Task.Delay(300).ConfigureAwait(false);
+        return 0;
+    }
+}
+</code></pre>
+
+    </div>
+</article>
+            </main>
+        </div>
+    </div>
+
+    <!-- サイトフッター -->
+    <footer id="sdi-footer">
+        <div id="sdi-footer-inner">
+            
+            <!-- プロフィール -->
+            <div style="font-size: 115%; line-height: 1.1;">
+                <div style="display: flex;">
+                    <div style="flex-shrink: 0;">
+                        <img src="/images/favicon-128.png" style="margin-right: 20px; border: 2px solid #e4e4e4; border-radius: 50%;" />
+                    </div>
+                    <div style="padding-top: 5px;">
+                        <div style="display: flex; align-items: flex-end; flex-wrap: wrap; column-gap: 8px;">
+                            <div style="font-size: 110%;">Yoshiheight</div>
+                            <div>/</div>
+                            <div style="font-size: 90%;">Programmer</div>
+                        </div>
+                        <div style="margin: 0.5em 0;">C#とTypeScriptに関することをメインに書いています。</div>
+                        <div style="margin-top: 25px; text-decoration: underline;">
+                            <a href="https://github.com/yoshiheight">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; font-size: 98%;">
+                Generated by <a style="text-decoration: underline;" href="https://github.com/yoshiheight/Sitegen">Sitegen</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

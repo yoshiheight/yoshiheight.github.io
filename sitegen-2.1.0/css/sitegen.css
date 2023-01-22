@@ -1,0 +1,242 @@
+@charset "utf-8";
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
+
+/* ===================== 基本 ===================== */
+
+html {
+    font-family: sans-serif;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    scrollbar-gutter: stable;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin: 0;
+    color: hsla(0,0%,0%,0.8); /* 通常の文字色 */
+    background-color: #f5f6f6;
+    font-size: 16px;
+    font-family: "Open Sans", "Hiragino Kaku Gothic ProN", Meiryo, Helvetica, Arial, sans-serif;
+    line-height: 1.7;
+    overflow-wrap: break-word; /* 単語の途中でも折り返す */
+}
+
+img {
+    border: none;
+    max-width: 100%;
+    height: auto;
+}
+
+/* ===================== ヘッダー ===================== */
+
+/* サイト名 */
+#sdi-site-name {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+/* ===================== メニュー ===================== */
+
+#sdi-menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.sdc-menu-section {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* ===================== リンク ===================== */
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+    a:active,
+    a:hover {
+        outline: 0;
+    }
+
+    a:hover {
+        color: #999;
+    }
+
+/* ===================== タグ ===================== */
+
+.sdc-tags {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 87%;
+    margin: -3px;
+}
+
+    .sdc-tags .sdc-tag {
+        margin: 3px;
+        display: flex; /* 高さ崩れ対策 */
+    }
+
+        .sdc-tags .sdc-tag a {
+            padding: 0 5px;
+            line-height: 1.5em;
+            border-radius: 1px;
+        }
+
+.sdc-tag a {
+    color: #4a4a4a;
+}
+
+    .sdc-tag a:hover {
+        color: #4a4a4a;
+        filter: brightness(95%);
+    }
+
+.sdc-tag a {
+    background-color: #e0e0e0;
+}
+
+.sdc-primary-tag > a {
+    background-color: powderblue;
+}
+
+/* ===================== 記事一覧 ===================== */
+
+#sdi-header-article-list {
+}
+
+#sdi-entry-article,
+#sdi-body-article-list {
+    background-color: #fff;
+    border-radius: 1px;
+    border: 1px solid #ddd;
+}
+
+.sdc-article-list-item {
+    padding: 15px 0;
+    border-top: 1px solid #ddd;
+}
+
+    .sdc-article-list-item:first-of-type {
+        border-top: none;
+    }
+
+/* ===================== レイアウト関連 ===================== */
+
+#sdi-header {
+    background-color: #274a78;
+}
+
+#sdi-header-inner {
+    color: #eee;
+    background-color: #333;
+}
+
+#sdi-footer {
+}
+
+#sdi-footer-inner {
+}
+
+#sdi-container {
+    background-color: #f5f6f6;
+}
+
+#sdi-header-inner,
+#sdi-footer-inner,
+#sdi-container-inner {
+    /*margin: 0 0;*/ /* 左寄せレイアウト */
+    margin: 0 auto; /* 中央寄せレイアウト */
+    max-width: 880px; /* 中央寄せレイアウト */
+    box-sizing: border-box; /* パディングとボーダーを幅と高さに含める */
+}
+
+/* ------ レイアウトのパディング ------ */
+
+#sdi-header-inner,
+#sdi-footer-inner,
+.sdc-article-list-item {
+    padding-left: 11px;
+    padding-right: 11px;
+}
+
+#sdi-entry-article,
+#sdi-tag-list {
+    padding: 11px;
+}
+
+#sdi-article-body > pre,
+#sdi-article-body li > pre {
+    margin-left: -11px;
+    margin-right: -11px;
+}
+
+#sdi-container {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+#sdi-menu,
+.sdc-menu-section {
+    column-gap: 20px;
+}
+
+@media screen and (min-width: 640px) {
+    #sdi-header-inner,
+    #sdi-footer-inner,
+    .sdc-article-list-item {
+        padding-left: 25px;
+        padding-right: 25px;
+    }
+
+    #sdi-entry-article,
+    #sdi-tag-list {
+        padding: 25px;
+    }
+
+    #sdi-container {
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
+
+    #sdi-menu,
+    .sdc-menu-section {
+        column-gap: 30px;
+    }
+}
+
+#sdi-footer {
+    padding-bottom: 20px;
+}
+
+/* ------------ */
+
+#sdi-article-header {
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+/* ===================== テスト用 ===================== */
+/*
+body {
+    background-color: blue;
+}
+#sdi-footer {
+    background-color: peru;
+}
+#sdi-footer-inner {
+    background-color: goldenrod;
+}
+#sdi-article-header {
+    background-color: cadetblue;
+}
+#sdi-footer {
+    padding-bottom: 0px;
+}
+*/

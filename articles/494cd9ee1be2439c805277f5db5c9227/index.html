@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    
+            <meta name="robots" content="noindex" />
+        
+    
+            <meta name="robots" content="nofollow" />
+        
+    <meta name="description" content="C#とTypeScriptに関することをメインに書いています。" />
+
+    <title>
+        
+                    [TS] OpenCV.jsで画像処理を試してみた | Programmer&#39;s Note
+                
+    </title>
+
+    
+            <link rel="stylesheet" href="/sitegen-2.1.0/css/sitegen.css" />
+        
+            <link rel="stylesheet" href="/sitegen-2.1.0/css/sitegen-article.css" />
+        
+
+    <script type="module" src="/sitegen-2.1.0/js/initialize.js"></script>
+
+    
+    <link rel="icon" type="image/png" href="/images/favicon-32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/images/favicon-48.png" sizes="48x48" />
+    <link rel="icon" type="image/png" href="/images/favicon-64.png" sizes="64x64" />
+    <link rel="icon" type="image/png" href="/images/favicon-128.png" sizes="128x128" />
+    <link rel="icon" type="image/png" href="/images/favicon-256.png" sizes="256x256" />
+    <link rel="apple-touch-icon" href="/images/favicon-256.png" sizes="256x256" />
+    <link rel="stylesheet" href="/css/custom-1.0.css" />
+</head>
+<body>
+    <!-- サイトヘッダー -->
+    <header id="sdi-header">
+        <div id="sdi-header-inner">
+            <div id="sdi-site-name"><a href="/">Programmer&#39;s Note</a></div>
+            <div id="sdi-menu">
+                <div class="sdc-menu-section">
+                    
+                                            <div>
+                                                <a href="/categories/demo/">Demo</a>
+                                            </div>
+                                        
+                                            <div>
+                                                <a href="/categories/tech/">Tech</a>
+                                            </div>
+                                        
+                                            <div>
+                                                <a href="/categories/scrap/">Scrap</a>
+                                            </div>
+                                        
+                                            <div>
+                                                <a href="/categories/tests/">Test&#39;s</a>
+                                            </div>
+                                        
+                </div>
+                <div class="sdc-menu-section">
+                    <div>
+                        <a href="/tags/">Tags</a>
+                    </div>
+                    <div>
+                        <a href="/search/">Search</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <div id="sdi-container">
+        <div id="sdi-container-inner">
+            <main>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.6.0/build/styles/base16/nova.min.css" />
+<script type="module">
+    import hljs from "https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.6.0/build/es/highlight.min.js";
+    hljs.highlightAll();
+</script>
+<script type="module">
+    import mermaid from "https://unpkg.com/mermaid@9.1.3/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: true, theme: "base" });
+</script>
+
+<article id="sdi-entry-article">
+    <!-- 記事ヘッダー -->
+    <header>
+        <!-- 記事タイトル -->
+        <h1>[TS] OpenCV.jsで画像処理を試してみた</h1>
+
+        <div id="sdi-article-header-annotation">
+            <!-- タグ -->
+            <div class="sdc-tags">
+                <div class="sdc-tag sdc-primary-tag sdc-primary-tag0">
+                    <a href="/categories/demo/">Demo</a>
+                </div>
+                
+                                    <div class="sdc-tag">
+                                        <a href="/tags/2d/">2D</a>
+                                    </div>
+                                
+                                    <div class="sdc-tag">
+                                        <a href="/tags/opencv/">OpenCV</a>
+                                    </div>
+                                
+                                    <div class="sdc-tag">
+                                        <a href="/tags/typescript/">TypeScript</a>
+                                    </div>
+                                
+            </div>
+
+            <!-- 日付 -->
+            <time datetime="2019-07-13">2019-07-13</time>
+        </div>
+    </header>
+
+    <!-- 記事内容 -->
+    <div id="sdi-article-body">
+<h3>デモ</h3>
+<script defer src="/files/cvdemo-ts/opencv-4.0.1.js"></script>
+<script defer src="/files/cvdemo-ts/cvdemo.js?v=9b6b4392aa42418fbdeae5f6607ff23c"></script>
+<div id="demo-loading-progress">Loading...</div>
+<div id="demo-root" style="display: none;">
+<div>
+<!-- 処理前の画像 -->
+<span id="img-src-wrapper" style="margin: 1px;">
+</span>
+<!-- 処理後の表示 -->
+<span style="margin: 1px;">
+<canvas id="canvas-dst" width="1" height="1"></canvas>
+</span>
+</div>
+<div style="font-size: 75%;">
+<div style="display: inline-grid; grid-template-columns: auto 5px auto;">
+<!-- ガンマ -->
+<div>
+<input id="check-gamma" type="checkbox" checked />
+<label for="check-gamma">ガンマ</label>
+</div>
+<div></div>
+<div>
+<input id="range-gamma" type="range" style="width: 125px;"
+min="0.5" max="5.0" step="0.1" value="2.0" />
+<span id="span-gamma"></span>
+</div>
+<!-- コントラスト -->
+<div>
+<input id="check-contrast" type="checkbox" checked />
+<label for="check-contrast">コントラスト</label>
+</div>
+<div></div>
+<div>
+<input id="range-contrast" type="range" style="width: 125px;"
+min="1.0" max="15.0" step="0.1" value="8.0" />
+<span id="span-contrast"></span>
+</div>
+<!-- シャープネス -->
+<div>
+<input id="check-sharpness" type="checkbox" checked />
+<label for="check-sharpness">シャープネス</label>
+</div>
+<div></div>
+<div>
+<input id="range-sharpness" type="range" style="width: 125px;"
+min="0.1" max="10.0" step="0.1" value="3.0" />
+<span id="span-sharpness"></span>
+</div>
+<!-- モザイク -->
+<div>
+<input id="check-mosaic" type="checkbox" />
+<label for="check-mosaic">モザイク</label>
+</div>
+<div></div>
+<div>
+<input id="range-mosaic" type="range" style="width: 125px;"
+min="2" max="30" step="1" value="5.0" />
+<span id="span-mosaic"></span>
+</div>
+</div>
+<!-- ディザリング -->
+<div>
+<input id="check-dithering" type="checkbox" />
+<label for="check-dithering">ディザリング（8色に減色）</label>
+</div>
+<!-- グレイスケール -->
+<div>
+<input id="check-grayscale" type="checkbox" />
+<label for="check-grayscale">グレイスケール</label>
+</div>
+<div id="require-grayscaled" style="margin-left: 1.5em;">
+<!-- 大津の二値化 -->
+<div>
+<input id="check-binary" type="checkbox" />
+<label for="check-binary">大津の二値化</label>
+</div>
+<!-- 重心表示 -->
+<div>
+<input id="check-center" type="checkbox" />
+<label for="check-center">重心表示</label>
+</div>
+</div>
+</div>
+</div>
+<h3>はじめに</h3>
+<p>もともと OpenCvSharp で遊んでいたんですが、OpenCV.js なるものが存在することを知ったので試してみました。</p>
+<p>OpenCV.jsですが、npm管理されているわけではなく、またts定義ファイルがないのがかなりつらいです。</p>
+<ul>
+<li>OpenCV.js
+<ul>
+<li><a href="https://opencv.org/">https://opencv.org/</a></li>
+<li><a href="https://docs.opencv.org/4.0.1/d5/d10/tutorial_js_root.html">https://docs.opencv.org/4.0.1/d5/d10/tutorial_js_root.html</a></li>
+</ul>
+</li>
+<li>OpenCvSharp
+<ul>
+<li><a href="https://www.nuget.org/profiles/schimatk">https://www.nuget.org/profiles/schimatk</a></li>
+</ul>
+</li>
+</ul>
+<h3>ソースコード</h3>
+<h4>HTML</h4>
+<pre><code class="language-html">&lt;script defer src=&quot;/files/cvdemo-ts/opencv-4.0.1.js&quot;&gt;&lt;/script&gt;
+&lt;script defer src=&quot;/files/cvdemo-ts/cvdemo.js?v=9b6b4392aa42418fbdeae5f6607ff23c&quot;&gt;&lt;/script&gt;
+
+&lt;div id=&quot;demo-loading-progress&quot;&gt;Loading...&lt;/div&gt;
+
+&lt;div id=&quot;demo-root&quot; style=&quot;display: none;&quot;&gt;
+    &lt;div&gt;
+        &lt;!-- 処理前の画像 --&gt;
+        &lt;span id=&quot;img-src-wrapper&quot; style=&quot;margin: 1px;&quot;&gt;
+        &lt;/span&gt;
+
+        &lt;!-- 処理後の表示 --&gt;
+        &lt;span style=&quot;margin: 1px;&quot;&gt;
+            &lt;canvas id=&quot;canvas-dst&quot; width=&quot;1&quot; height=&quot;1&quot;&gt;&lt;/canvas&gt;
+        &lt;/span&gt;
+    &lt;/div&gt;
+
+    &lt;div style=&quot;font-size: 75%;&quot;&gt;
+        &lt;div style=&quot;display: inline-grid; grid-template-columns: auto 5px auto;&quot;&gt;
+            &lt;!-- ガンマ --&gt;
+            &lt;div&gt;
+                &lt;input id=&quot;check-gamma&quot; type=&quot;checkbox&quot; checked /&gt;
+                &lt;label for=&quot;check-gamma&quot;&gt;ガンマ&lt;/label&gt;
+            &lt;/div&gt;
+            &lt;div&gt;&lt;/div&gt;
+            &lt;div&gt;
+                &lt;input id=&quot;range-gamma&quot; type=&quot;range&quot; style=&quot;width: 125px;&quot;
+                       min=&quot;0.5&quot; max=&quot;5.0&quot; step=&quot;0.1&quot; value=&quot;2.0&quot; /&gt;
+                &lt;span id=&quot;span-gamma&quot;&gt;&lt;/span&gt;
+            &lt;/div&gt;
+
+            &lt;!-- コントラスト --&gt;
+            &lt;div&gt;
+                &lt;input id=&quot;check-contrast&quot; type=&quot;checkbox&quot; checked /&gt;
+                &lt;label for=&quot;check-contrast&quot;&gt;コントラスト&lt;/label&gt;
+            &lt;/div&gt;
+            &lt;div&gt;&lt;/div&gt;
+            &lt;div&gt;
+                &lt;input id=&quot;range-contrast&quot; type=&quot;range&quot; style=&quot;width: 125px;&quot;
+                       min=&quot;1.0&quot; max=&quot;15.0&quot; step=&quot;0.1&quot; value=&quot;8.0&quot; /&gt;
+                &lt;span id=&quot;span-contrast&quot;&gt;&lt;/span&gt;
+            &lt;/div&gt;
+
+            &lt;!-- シャープネス --&gt;
+            &lt;div&gt;
+                &lt;input id=&quot;check-sharpness&quot; type=&quot;checkbox&quot; checked /&gt;
+                &lt;label for=&quot;check-sharpness&quot;&gt;シャープネス&lt;/label&gt;
+            &lt;/div&gt;
+            &lt;div&gt;&lt;/div&gt;
+            &lt;div&gt;
+                &lt;input id=&quot;range-sharpness&quot; type=&quot;range&quot; style=&quot;width: 125px;&quot;
+                       min=&quot;0.1&quot; max=&quot;10.0&quot; step=&quot;0.1&quot; value=&quot;3.0&quot; /&gt;
+                &lt;span id=&quot;span-sharpness&quot;&gt;&lt;/span&gt;
+            &lt;/div&gt;
+
+            &lt;!-- モザイク --&gt;
+            &lt;div&gt;
+                &lt;input id=&quot;check-mosaic&quot; type=&quot;checkbox&quot; /&gt;
+                &lt;label for=&quot;check-mosaic&quot;&gt;モザイク&lt;/label&gt;
+            &lt;/div&gt;
+            &lt;div&gt;&lt;/div&gt;
+            &lt;div&gt;
+                &lt;input id=&quot;range-mosaic&quot; type=&quot;range&quot; style=&quot;width: 125px;&quot;
+                       min=&quot;2&quot; max=&quot;30&quot; step=&quot;1&quot; value=&quot;5.0&quot; /&gt;
+                &lt;span id=&quot;span-mosaic&quot;&gt;&lt;/span&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;!-- ディザリング --&gt;
+        &lt;div&gt;
+            &lt;input id=&quot;check-dithering&quot; type=&quot;checkbox&quot; /&gt;
+            &lt;label for=&quot;check-dithering&quot;&gt;ディザリング（8色に減色）&lt;/label&gt;
+        &lt;/div&gt;
+
+        &lt;!-- グレイスケール --&gt;
+        &lt;div&gt;
+            &lt;input id=&quot;check-grayscale&quot; type=&quot;checkbox&quot; /&gt;
+            &lt;label for=&quot;check-grayscale&quot;&gt;グレイスケール&lt;/label&gt;
+        &lt;/div&gt;
+
+        &lt;div id=&quot;require-grayscaled&quot; style=&quot;margin-left: 1.5em;&quot;&gt;
+            &lt;!-- 大津の二値化 --&gt;
+            &lt;div&gt;
+                &lt;input id=&quot;check-binary&quot; type=&quot;checkbox&quot; /&gt;
+                &lt;label for=&quot;check-binary&quot;&gt;大津の二値化&lt;/label&gt;
+            &lt;/div&gt;
+
+            &lt;!-- 重心表示 --&gt;
+            &lt;div&gt;
+                &lt;input id=&quot;check-center&quot; type=&quot;checkbox&quot; /&gt;
+                &lt;label for=&quot;check-center&quot;&gt;重心表示&lt;/label&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h4>TypeScript</h4>
+<pre><code class="language-ts">declare var cv: any;
+
+class CvDemoApp {
+    private _imgSrc: HTMLImageElement | null = null;
+    private readonly _canvasDst = document.querySelector&lt;HTMLCanvasElement&gt;(&quot;#canvas-dst&quot;)!;
+
+    private readonly _checkGamma = document.querySelector&lt;HTMLInputElement&gt;(&quot;#check-gamma&quot;)!;
+    private readonly _rangeGamma = document.querySelector&lt;HTMLInputElement&gt;(&quot;#range-gamma&quot;)!;
+    private readonly _spanGamma = document.querySelector&lt;HTMLSpanElement&gt;(&quot;#span-gamma&quot;)!;
+
+    private readonly _checkContrast = document.querySelector&lt;HTMLInputElement&gt;(&quot;#check-contrast&quot;)!;
+    private readonly _rangeContrast = document.querySelector&lt;HTMLInputElement&gt;(&quot;#range-contrast&quot;)!;
+    private readonly _spanContrast = document.querySelector&lt;HTMLSpanElement&gt;(&quot;#span-contrast&quot;)!;
+
+    private readonly _checkSharpness = document.querySelector&lt;HTMLInputElement&gt;(&quot;#check-sharpness&quot;)!;
+    private readonly _rangeSharpness = document.querySelector&lt;HTMLInputElement&gt;(&quot;#range-sharpness&quot;)!;
+    private readonly _spanSharpness = document.querySelector&lt;HTMLSpanElement&gt;(&quot;#span-sharpness&quot;)!;
+
+    private readonly _checkMosaic = document.querySelector&lt;HTMLInputElement&gt;(&quot;#check-mosaic&quot;)!;
+    private readonly _rangeMosaic = document.querySelector&lt;HTMLInputElement&gt;(&quot;#range-mosaic&quot;)!;
+    private readonly _spanMosaic = document.querySelector&lt;HTMLSpanElement&gt;(&quot;#span-mosaic&quot;)!;
+
+    private readonly _checkDithering = document.querySelector&lt;HTMLInputElement&gt;(&quot;#check-dithering&quot;)!;
+
+    private readonly _checkGrayscale = document.querySelector&lt;HTMLInputElement&gt;(&quot;#check-grayscale&quot;)!;
+
+    private readonly _checkBinary = document.querySelector&lt;HTMLInputElement&gt;(&quot;#check-binary&quot;)!;
+
+    private readonly _checkCenter = document.querySelector&lt;HTMLInputElement&gt;(&quot;#check-center&quot;)!;
+
+    public start(): void {
+        document.querySelector&lt;HTMLElement&gt;(&quot;#demo-loading-progress&quot;)!.style.display = &quot;none&quot;;
+        document.querySelector&lt;HTMLElement&gt;(&quot;#demo-root&quot;)!.style.display = &quot;inline&quot;;
+
+        const targets = document.querySelectorAll&lt;HTMLInputElement&gt;(&quot;#demo-root input&quot;);
+        for (const target of targets) {
+            target.addEventListener(&quot;change&quot;, () =&gt; {
+                if (this._imgSrc?.complete) {
+                    this.refreshGui();
+                    this.processCv();
+                }
+            });
+        }
+
+        this._imgSrc = document.createElement(&quot;img&quot;);
+        this._imgSrc.onload = () =&gt; {
+            this.refreshGui();
+            this.processCv();
+        };
+        this._imgSrc.src = &quot;/files/cvdemo-ts/test.jpg?v=9b6b4392aa42418fbdeae5f6607ff23c&quot;;
+        document.querySelector(&quot;#img-src-wrapper&quot;)!.appendChild(this._imgSrc);
+    }
+
+    private refreshGui(): void {
+        this._rangeGamma.disabled = !this._checkGamma.checked;
+        this._spanGamma.textContent = this._rangeGamma.value;
+        this._rangeContrast.disabled = !this._checkContrast.checked;
+        this._spanContrast.textContent = this._rangeContrast.value;
+        this._rangeSharpness.disabled = !this._checkSharpness.checked;
+        this._spanSharpness.textContent = this._rangeSharpness.value;
+        this._rangeMosaic.disabled = !this._checkMosaic.checked;
+        this._spanMosaic.textContent = this._rangeMosaic.value;
+        const targets = document.querySelectorAll&lt;HTMLInputElement&gt;(&quot;#require-grayscaled input&quot;);
+        for (const target of targets) {
+            target.disabled = !this._checkGrayscale.checked;
+        }
+    }
+
+    private processCv(): void {
+        const imageProc = new ImageProc(cv.imread(this._imgSrc!));
+        try {
+            if (this._checkGamma.checked) {
+                imageProc.gamma(this._rangeGamma.valueAsNumber);
+            }
+
+            if (this._checkContrast.checked) {
+                imageProc.contrast(this._rangeContrast.valueAsNumber);
+            }
+
+            if (this._checkSharpness.checked) {
+                imageProc.sharpness(this._rangeSharpness.valueAsNumber);
+            }
+
+            if (this._checkMosaic.checked) {
+                imageProc.mosaic(this._rangeMosaic.valueAsNumber);
+            }
+
+            if (this._checkDithering.checked) {
+                imageProc.dithering();
+            }
+
+            if (this._checkGrayscale.checked) {
+                imageProc.colorToGray();
+
+                if (this._checkBinary.checked) {
+                    imageProc.binary();
+                }
+
+                if (this._checkCenter.checked) {
+                    imageProc.drawCenterOfMoments();
+                }
+            }
+
+            cv.imshow(this._canvasDst, imageProc.mat);
+        }
+        finally {
+            imageProc.dispose();
+        }
+    }
+}
+
+/**
+ * 画像処理クラス
+ */
+class ImageProc {
+    private _disposed = false;
+    public get mat(): any { return this._mat; }
+
+    public constructor(private _mat: any) {
+    }
+
+    public dispose(): void {
+        if (!this._disposed) {
+            this._mat.delete();
+            this._disposed = true;
+        }
+    }
+
+    // ガンマ補正
+    public gamma(value: number): void {
+        const GV = 1.0 / value;
+        const lut = ImageProc.createLut(i =&gt; {
+            return Math.pow(i / 255.0, GV) * 255.0;
+        });
+        this.applyFunc((row, col, value) =&gt; lut[value]);
+    }
+
+    // コントラスト調整
+    public contrast(value: number): void {
+        const lut = ImageProc.createLut(i =&gt; {
+            return 255.0 / (1 + Math.exp(-value * (i - 128) / 255.0));
+        });
+        this.applyFunc((row, col, value) =&gt; lut[value]);
+    }
+
+    // シャープネス
+    public sharpness(value: number): void {
+        this.exchange(dst =&gt; {
+            value = value / 9.0;
+            const kernelData = [
+                -value, -value, -value,
+                -value, 1 + (8 * value), -value,
+                -value, -value, -value,
+            ];
+            const kernel = cv.matFromArray(3, 3, cv.CV_64F, kernelData);
+            cv.filter2D(this._mat, dst, -1, kernel);
+        });
+    }
+
+    // モザイク
+    public mosaic(value: number): void {
+        const ROWS = this._mat.rows;
+        const COLS = this._mat.cols;
+        this.exchange(dst =&gt; {
+            const dstSize = new cv.Size(0, 0);
+            const ratio = 1.0 / value;
+            cv.resize(this._mat, dst, dstSize, ratio, ratio, cv.INTER_NEAREST);
+        });
+        this.exchange(dst =&gt; {
+            const dstSize = new cv.Size(COLS, ROWS);
+            cv.resize(this._mat, dst, dstSize, 0, 0, cv.INTER_NEAREST);
+        });
+    }
+
+    // カラー to グレー
+    public colorToGray(): void {
+        this.exchange(dst =&gt; {
+            cv.cvtColor(this._mat, dst, cv.COLOR_RGBA2GRAY, 0);
+        });
+    }
+
+    // グレー to カラー
+    public grayToColor(): void {
+        this.exchange(dst =&gt; {
+            cv.cvtColor(this._mat, dst, cv.COLOR_GRAY2RGBA, 0);
+        });
+    }
+
+    // 大津の二値化
+    public binary(): void {
+        this.exchange(dst =&gt; {
+            cv.threshold(this._mat, dst, 0.0, 255.0, cv.THRESH_BINARY | cv.THRESH_OTSU);
+        });
+    }
+
+    // ディザリング
+    public dithering(): void {
+        const matrix = [[0, 8, 2, 10], [12, 4, 14, 6], [3, 11, 1, 9], [15, 7, 13, 5]];
+        for (let i = 0; i &lt; 4; i++) {
+            for (let j = 0; j &lt; 4; j++) {
+                matrix[i][j] *= 16;
+            }
+        }
+
+        this.applyFunc((row, col, value) =&gt; {
+            return (value &lt; matrix[row % 4][col % 4]) ? 0 : 255;
+        });
+    }
+
+    // 重心描画
+    public drawCenterOfMoments(): void {
+        const center = this.getCenterOfMoments();
+        this.grayToColor();
+        this.fillCircle(center, 7, new cv.Scalar(255, 0, 0, 255));
+    }
+
+    // 塗りつぶし円を描画
+    public fillCircle(point: any, radius: number, scalar: any): void {
+        cv.circle(this._mat, point, radius, scalar, -1, cv.LINE_AA);
+    }
+
+    // 重心取得
+    public getCenterOfMoments(): any {
+        const moments = cv.moments(this._mat);
+        return new cv.Point(moments.m10 / moments.m00, moments.m01 / moments.m00);
+    }
+
+    // 画像処理時の共通処理
+    private exchange(callback: (dst: any) =&gt; void): void {
+        const dst = new cv.Mat();
+        callback(dst);
+        this._mat.delete();
+        this._mat = dst;
+    }
+
+    // 各RGBに対する処理
+    public applyFunc(callback: (row: number, col: number, value: number) =&gt; number): void {
+        if (!this._mat.isContinuous()) {
+            throw &quot;mat is not continuous.&quot;;
+        }
+
+        const ROWS = this._mat.rows;
+        const COLS = this._mat.cols;
+        const CHANNELS = this._mat.channels();
+        const TARGET_CHANNELS = Math.min(CHANNELS, 3);
+        let index = 0;
+        let beforeIndex = 0;
+        const data = this._mat.data;
+        for (let row = 0; row &lt; ROWS; row++) {
+            beforeIndex = row * COLS * CHANNELS;
+            for (let col = 0; col &lt; COLS; col++) {
+                index = beforeIndex + (col * CHANNELS);
+                for (let ch = 0; ch &lt; TARGET_CHANNELS; ch++) {
+                    data[index + ch] = callback(row, col, data[index + ch]);
+                }
+            }
+        }
+    }
+
+    // ルックアップテーブル生成
+    public static createLut(callback: (i: number) =&gt; number): number[] {
+        const LENGTH = 256;
+        const lut = new Array&lt;number&gt;(LENGTH);
+        for (let i = 0; i &lt; LENGTH; i++) {
+            lut[i] = Math.floor(callback(i));
+        }
+        return lut;
+    }
+}
+
+const demoApp = new CvDemoApp();
+demoApp.start();
+</code></pre>
+
+    </div>
+</article>
+            </main>
+        </div>
+    </div>
+
+    <!-- サイトフッター -->
+    <footer id="sdi-footer">
+        <div id="sdi-footer-inner">
+            
+            <!-- プロフィール -->
+            <div style="font-size: 115%; line-height: 1.1;">
+                <div style="display: flex;">
+                    <div style="flex-shrink: 0;">
+                        <img src="/images/favicon-128.png" style="margin-right: 20px; border: 2px solid #e4e4e4; border-radius: 50%;" />
+                    </div>
+                    <div style="padding-top: 5px;">
+                        <div style="display: flex; align-items: flex-end; flex-wrap: wrap; column-gap: 8px;">
+                            <div style="font-size: 110%;">Yoshiheight</div>
+                            <div>/</div>
+                            <div style="font-size: 90%;">Programmer</div>
+                        </div>
+                        <div style="margin: 0.5em 0;">C#とTypeScriptに関することをメインに書いています。</div>
+                        <div style="margin-top: 25px; text-decoration: underline;">
+                            <a href="https://github.com/yoshiheight">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; font-size: 98%;">
+                Generated by <a style="text-decoration: underline;" href="https://github.com/yoshiheight/Sitegen">Sitegen</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

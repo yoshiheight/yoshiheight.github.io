@@ -1,0 +1,208 @@
+@charset "utf-8";
+
+time {
+    font-size: 87%;
+    white-space: nowrap;
+}
+
+video {
+    width: 100%;
+}
+
+/* ===================== リンク ===================== */
+
+#sdi-article-body a {
+    overflow-wrap: break-word; /* 単語の途中でも折り返す */
+}
+
+    /* 未訪問 */
+    #sdi-article-body a:link {
+        color: #2288bb;
+    }
+    /* 訪問済み */
+    #sdi-article-body a:visited {
+        color: #2288bb;
+    }
+    /* ホバー */
+    #sdi-article-body a:hover {
+        color: #2288bb;
+        text-decoration: underline;
+    }
+
+/* ===================== テーブル ===================== */
+
+table {
+    width: 100%;
+    font-size: 90%;
+    line-height: 1.5em;
+    border-collapse: collapse;
+    border-top: 1px solid #e4e4e4;
+    border-left: solid 1px #e4e4e4;
+}
+
+thead {
+    background-color: #f5f5f5;
+}
+
+th {
+    text-align: center !important;
+    font-weight: normal;
+}
+
+th,
+td {
+    padding: 0.4em 0.8em;
+    border-bottom: 1px solid #e4e4e4;
+    border-right: solid 1px #e4e4e4;
+}
+
+/* ===================== 記事 ===================== */
+
+/* 記事ヘッダーのタグや日付 */
+#sdi-article-header-annotation {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+
+    /* 日付はflexレイアウトで改行された後でも右寄せ */
+    #sdi-article-header-annotation time {
+        margin-left: auto;
+        margin-right: 0;
+    }
+
+/* 箇条書き */
+ul,
+ol {
+    margin-left: 1.5em;
+    padding: 0;
+}
+
+/* 箇条書きの入れ子 */
+li > ul,
+li > ol,
+li > p {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+li > pre {
+    margin-top: 6px;
+    margin-bottom: 6px;
+}
+
+/* 引用 */
+blockquote {
+    padding: 0.4em 0.6em 0.4em 0.6em;
+    margin: 0 0 1.6em;
+    background-color: transparent;
+    font-style: normal;
+    font-size: 95%;
+    border-left: solid 4px #ddd;
+}
+
+    /* 引用の入れ子 */
+    blockquote > ul,
+    blockquote > ol,
+    blockquote > p {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+code {
+    font-family: Monaco,Consolas,"Courier New",Courier,sans-serif,monospace;
+    font-size: 95%;
+    margin-left: 2px;
+    margin-right: 2px;
+    padding-left: 4px;
+    padding-right: 4px;
+    border: 1px solid rgba(0,0,0,.08);
+    background-color: rgba(0,0,0,.03);
+    border-radius: 3px;
+    white-space: pre;
+}
+
+pre > code {
+    margin: 0;
+    padding: 0.5em;
+    border: 0;
+    border-radius: 0;
+}
+
+pre {
+    margin-left: 0;
+    margin-right: 0;
+    line-height: 1.4;
+    white-space: pre;
+    overflow-wrap: normal;
+    overflow-x: auto;
+}
+
+/* ===================== 記事の見出し ===================== */
+
+h1, h3, h4, h5 {
+    font-weight: bold;
+    letter-spacing: -0.01em;
+    line-height: 1.2em;
+}
+
+h1 {
+    font-size: 180%;
+    margin-top: 0;
+    margin-bottom: 8px;
+}
+
+h3 {
+    font-size: 170%;
+    border-bottom: solid 1px #ddd;
+    padding-bottom: 4px;
+}
+
+h4 {
+    font-size: 140%;
+}
+
+h5 {
+    font-size: 100%;
+}
+
+/* ===================== 記事内の上下マージン ===================== */
+
+h3 {
+    margin-top: 2em;
+    margin-bottom: 1em;
+}
+
+    h3:first-of-type {
+        margin-top: 2.5em;
+    }
+
+    h3 + h4 {
+        margin-top: 1em;
+    }
+
+h4 {
+    margin-top: 1.5em;
+    margin-bottom: 1em;
+}
+
+h5 {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+ul,
+ol {
+    margin-bottom: 0.9em;
+}
+
+#sdi-article-body > p {
+    margin-bottom: 0.9em;
+}
+
+#sdi-article-body > pre,
+#sdi-article-body > video,
+#sdi-article-body > blockquote {
+    margin-bottom: 1.0em;
+}

@@ -1,0 +1,165 @@
+[{
+  "url": "/articles/7258d4e6eb3c4e3e9f5ceaf5afa197b0/",
+  "date": "2019-03-26",
+  "title": "WinSCPのミラーリングアップロードをコマンドラインから実行する",
+  "category": {
+    "order": 2,
+    "name": "Scrap",
+    "url": "/categories/scrap/"
+  },
+  "tags": [
+    {
+      "name": "WinSCP",
+      "url": "/tags/winscp/"
+    },
+    {
+      "name": "開発全般",
+      "url": "/tags/general-dev/"
+    }
+  ],
+  "content": "概要 自サイトにファイルをアップするのに WinSCP のミラーリングアップロードを使用しているのですが、そのやり方について記載します。 ミラーリングアップロードとは ローカルディレクトリを監視し、変更があれば随時リモートにアップする機能 ミラーリングアップロードを開始すると監視中の状態となる ミラーリングアップロードを停止すると監視は解除される インストール WinSCP https://forest.watch.impress.co.jp/library/software/winscp/ 前準備 WinSCP を起動し、新しいセッションを作成してログイン情報を登録しておきます。 バッチファイル用意 ＜WinSCP.exeパス＞ ＜登録したセッション名＞ /keepuptodate ＜ローカルディレクトリパス＞ ＜リモートディレクトリパス＞ /defaults /keepuptodate ミラーリングアップロードを実行する /defaults 転送オプションについて、最後に実行した際の GUI の設定のままとする 実行 バッチファイルを実行すれば自動的にミラーリングアップロード用の GUI が起動します。 転送オプションは GUI から設定する必要があり、自環境では サブディレクトリも更新する 起動時に同期する をオンにしています。"
+},{
+  "url": "/articles/5f0728ea41fe4692ac33d6289424e4e9/",
+  "date": "2019-01-14",
+  "title": "プログラマーの修行内容",
+  "category": {
+    "order": 2,
+    "name": "Scrap",
+    "url": "/categories/scrap/"
+  },
+  "tags": [
+    {
+      "name": "開発全般",
+      "url": "/tags/general-dev/"
+    }
+  ],
+  "content": "はじめに プログラミング未経験者に対して開発会社がどういう研修を行うかは、とても重要です。 自分のときはどうだったか、思い出してみました。 テスター兼、修行 当時はWindowsバブルの頃で、Windows向け市販パッケージソフトを開発していました。 最初の1年はアルバイト扱いで、テスターをしながら研修（修行と呼ばれていた）を受けます。 テスター作業：4～6ヵ月 プログラマー修行：6～8ヵ月 修行中も時給はもらえますが、正社員プログラマーとして開発に参画できるのは見込みがある人だけでした。 プログラマー採用は見極めが難しいので、いい採用システムだったのではないかと思います。 修行内容 開発製品はWindowsアプリケーションだったので、その技術（C\u002B\u002B, Win32API, MFC）を習得する内容になっています。 PC基礎 ブラインドタッチ 練習ソフトで1セット15分を1日3セット OSに触れる MS-DOS Windows 3.1 Windows 95 言語 C言語 書籍（教本と問題集）を使用して言語、アルゴリズム、データ構造の基礎 atoi, strlen, strcpy, strcmp等と同じ物を自作 コンソールアプリ作成 dir/copy/typeコマンド等と同じ物を自作 簡易住所録アプリ C\u002B\u002B言語 書籍：CプログラマのためのC\u002B\u002B入門（柴田 望洋） Windowsプログラミング Win32API 書籍：プログラミングWindows MFC 書籍：MFCによるWindowsプログラミング アプリ作成 テキストビューア ドロー系お絵描きアプリ 簡易住所録アプリ 修行後 自主的に以下の書籍で学習。 現実的なC\u002B\u002Bプログラミング（Robert B. Murray） Effective C\u002B\u002B（Scott Meyers） おわりに 研修内容としてはかなり充実していたと思います。"
+},{
+  "url": "/articles/dbada619baf24d05b33a216b0871ebe3/",
+  "date": "2019-01-07",
+  "title": "[C#] WPFでソフトウェア「Neko」的なものを作ってみた",
+  "category": {
+    "order": 2,
+    "name": "Scrap",
+    "url": "/categories/scrap/"
+  },
+  "tags": [
+    {
+      "name": "2D",
+      "url": "/tags/2d/"
+    },
+    {
+      "name": "C#",
+      "url": "/tags/cs/"
+    },
+    {
+      "name": "WPF",
+      "url": "/tags/wpf/"
+    }
+  ],
+  "content": "概要 かなり前に作ったやつで、ソースコードをアップしました。 https://github.com/yoshiheight/Sample.WpfNeko 動作内容は、以下と同じです。 PixiJS＋TypeScriptでソフトウェア「Neko」的なものを作ってみた https://crash.jp/pages/938a2b72c7174014b7ce6005cd4bda9e/"
+},{
+  "url": "/articles/938a2b72c7174014b7ce6005cd4bda9e/",
+  "date": "2019-01-06",
+  "title": "[TS] PixiJSでソフトウェア「Neko」的なものを作ってみた",
+  "category": {
+    "order": 0,
+    "name": "Demo",
+    "url": "/categories/demo/"
+  },
+  "tags": [
+    {
+      "name": "2D",
+      "url": "/tags/2d/"
+    },
+    {
+      "name": "PixiJS",
+      "url": "/tags/pixijs/"
+    },
+    {
+      "name": "TypeScript",
+      "url": "/tags/typescript/"
+    }
+  ],
+  "content": "デモ \u003Cdiv id=\u0022my-demo-pixi-view\u0022\u003E\u003C/div\u003E マウスカーソルを追いかけます 「読み込み中...」の表示は、（すぐ読み込めた場合でも）わざと表示しています はじめに PixiJSを使うと2Dスプライト描画が簡単にできる（しかもWebGLで処理してくれる）ということで、試してみました。 PixiJS http://www.pixijs.com/ Neko https://ja.wikipedia.org/wiki/Neko_(%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2) 環境構築 とりあえずTypeScriptを試すために行ったこと。 環境 Visual Studio 2017 TypeScript 3.1 Node.jsのLTS版（推奨版）をインストール https://nodejs.org/ja/ 「ASP.NET Core Web アプリケーション」の空プロジェクトを作成 Startup.csのConfigureメソッド内を以下の2文のみにする app.UseDefaultFiles(); app.UseStaticFiles(); プロジェクトルートで以下のnpmコマンド実行 npm init --yes npm install @types/jquery --save-dev npm install @types/pixi.js --save-dev jsファイル本体はCDNを使う wwwrootディレクトリに以下を追加 index.html TypeScriptソースファイル （本当は別途ディレクトリを用意して、gulpとかwebpackとか使った方がいい） 既存のtsファイルを追加した場合、ファイルプロパティでビルドアクションを TypeScriptファイル に変更 プロジェクト設定でTypeScriptのビルド設定を変更 ECMAScriptバージョン：ECMAScript 6 暗黙的な any 型を許可：オフ Null非許容の設定にする場合、.csprojファイルに以下を追加 \u003CTypeScriptStrictNullChecks\u003ETrue\u003C/TypeScriptStrictNullChecks\u003E 参考 公式サイトは重いのでGitHubの方を見た方がいい https://github.com/Microsoft/TypeScript-Handbook/blob/master/pages/tutorials/ASP.NET%20Core.md https://github.com/Microsoft/TypeScript-Handbook/blob/master/pages/tsconfig.json.md https://github.com/Microsoft/TypeScript-Handbook/blob/master/pages/Compiler%20Options.md ソースコード Neko.ts \u003Cdiv id=\u0022my-neko-ts-code\u0022\u003E\u003C/div\u003E image-list.json \u003Cdiv id=\u0022my-image-list-json-code\u0022\u003E\u003C/div\u003E \u003Cscript src=\u0022/files/neko-ts/app/bootloader.js?v=39ecd7f7620d4a9f898c081e9d2429a4\u0022\u003E\u003C/script\u003E \u003Cscript\u003E $(async () =\u003E { await NekoDemo.BootLoader.loadAsync(); await NekoDemo.PixiView.startAsync(\u0022#my-demo-pixi-view\u0022); CrashPagesJS.Common.HljsUtil.createBlock(\u0022#my-neko-ts-code\u0022, \u0022ts\u0022, \u0060/files/neko-ts/source/Neko.ts?v=${NekoDemo.PixiView.Version}\u0060); CrashPagesJS.Common.HljsUtil.createBlock(\u0022#my-image-list-json-code\u0022, \u0022json\u0022, \u0060/files/neko-ts/app/images/neko/image-list.json?v=${NekoDemo.PixiView.Version}\u0060); }); \u003C/script\u003E"
+},{
+  "url": "/articles/02f4ef48df76409889545a7eca17ac1e/",
+  "date": "2018-12-17",
+  "title": "[C#][TS] 静的サイトジェネレーター「Sitedig」の紹介",
+  "category": {
+    "order": 1,
+    "name": "Tech",
+    "url": "/categories/tech/"
+  },
+  "tags": [
+    {
+      "name": "静的サイトジェネレーター",
+      "url": "/tags/static-site-generator/"
+    },
+    {
+      "name": "C#",
+      "url": "/tags/cs/"
+    },
+    {
+      "name": "TypeScript",
+      "url": "/tags/typescript/"
+    }
+  ],
+  "content": "この記事は「静的サイトジェネレーター Advent Calendar 2018」17日目の記事です。 はじめに 静的サイトジェネレーターを作ってみたので、その話と使い方の紹介です。 GitHubリポジトリ https://github.com/yoshiheight/Crash.Pages サイト生成処理にはC#を使用しています。サイト内でのWebフロントエンド処理には（現在開発中の次期版では）TypeScriptを使用しています。 自作した話 サイトの特徴 どういうサイトが生成されるか、ですが、このサイト自体が自作の静的サイトジェネレーターで生成しています。 以下、主な特徴です。 ページ構成 トップページ（記事一覧） タグページ 検索結果ページ 各記事ページ 検索機能 目次機能 レスポンシブデザイン 自作した理由 既存のサービスや静的サイトジェネレーターを使うことも考えたのですが、最終的には以下の理由で自作することにしました。 WordPress等のCMSではオーバースペックだし、構築や設定が面倒 既存のサービスだと外部のJavaScriptライブラリ等を組み込めない、組み込むのが面倒 既存のサービスだと他へ移行するときに面倒 広告を表示したくないし、有料プランにするぐらいならホスティングサービスを使う 表示速度を上げたい 独自ドメインを使用したい Qiitaの様な技術情報限定のサービスの場合、他の人と記事内容がかぶっていると、なんか上げにくい 自サイトの方が内容を気にせず、また自分用備忘録的なものも上げやすい シンプルな画面構成にしたい、デザインを好きなようにしたい 一覧表示はページングしないで全部表示したい Markdownの記事はGitで管理してVisual Studio Codeで編集したい HTML、CSS、JavaScriptは最近さわっていなかったので、ちょっとさわっておきたい C#製MarkdownライブラリのMarkDigを試してみたい ただ単に.NET Coreでなにか作りたかった 既存のものをいろいろカスタムするより、自作した方が早いと思った 自分にとって上記を全て満たす方法が「自作＋好きなホスティングサービスで公開」だったわけです。 フロントエンドで使用しているライブラリ、リソース https://jquery.com/ https://fonts.google.com/ 以下は現在開発中の次期Crash.Pagesの場合 https://lodash.com/ https://highlightjs.org/ https://mermaidjs.github.io/ 環境構築 配布用バイナリは用意していません。もともと自分用に作っていたというのもあり、ちょっと面倒なんですが、前述のGitHubリポジトリから取得してVisual Studioでビルドが必要です。 というか、テンプレートにT4Templateを使用しているので、サイトヘッダーやフッター、プロフィールの記述など、Visual Studioがないとできません。 プロジェクト構成 プロジェクト |内容 |形態 --------------------|-----------------------------|------------------------------- Crash.Core |共通ライブラリ |.NET Standardライブラリ Crash.Pages |静的サイトジェネレーター本体 |.NET Coreコンソールアプリ Crash.Pages.Model |処理モデル |.NET Coreライブラリ Crash.Pages.Storage |ファイルIO関連 |.NET Coreライブラリ SimpleWebServer |簡易Webサーバー |ASP.NET Core SimpleWebServerは独立したプロジェクトです。必要に応じて、ローカル環境でのサイト内容確認に使用してください ユーザー指定部分 文字列「ユーザー指定部分」で検索するとヒットする以下の箇所がユーザー固有の記述部分ですので、書き換えてください。 Page.cs サイト名 LayoutTemplate.tthtml サイトヘッダー プロフィール サイトフッター ビルド手順 「すべてのT4テンプレートの変換」を実行 Release版でソリューションのリビルドを実行 ディレクトリの用意 入力元ディレクトリを以下の構成で用意してください。 \u002B 入力元ディレクトリ（任意の名前） \u002B _drafts 下書き用 \u002B _posts 公開用 出力先ディレクトリのルートを用意してください。サブディレクトリはモードに応じて自動生成されます。 \u002B 出力先ディレクトリ（任意の名前） \u002B _preview プレビューモードでの生成先 \u002B _site 本番モードでの生成先 サイト生成 記事の作成 Markdownファイルを以下のファイル名で文字コードUTF-8で作成してください。BOMの有無や改行コードは何でも大丈夫です。 YYYY-MM-DD-記事タイトル.md ファイルの先頭にはYAMLで記事のメタデータを埋め込む必要があります。 --- id: my-page tags: [Markdown, 静的サイト] --- 記事IDはパーマリンクの一部として使用されます /pages/記事ID/ 記事内での見出しはh3からh5を使用してください 出力されるHTMLファイルの文字コードはUTF-8 BOM無し、改行コードはLFになります 出力されるHTMLファイルのタイムスタンプは、もとのMarkdownファイルと同じになります Markdown以外のファイルはそのまま出力先ディレクトリにコピーされます サイト生成の実行 以下のコマンドを実行します。 dotnet ＜Crash.Pages.dllパス＞ --src=＜入力元ディレクトリパス＞ --dest=＜出力先ディレクトリパス＞ --previewオプション プレビューモードで実行します。下書き記事もHTML変換され、また全記事の先頭にMarkdownファイルパスが表示されます サイト内容の確認 SimpleWebServerでサイト内容を確認する場合、以下のコマンドを実行します。 dotnet ＜SimpleWebServer.dllパス＞ ＜ポート番号＞ ＜生成先ディレクトリパス＞ おわりに 実際に作ってみて、自分の欲しかったものができ、更に HTML5, CSS3, ECMAScript 2015 もいろいろ試すことができました。 既存のものが気に入らなければ、自分で作ってしまうのも、たまにはいいのではないでしょうか。"
+},{
+  "url": "/articles/6c5c4b03b6ff4518ae7960a6fd2e4fc9/",
+  "date": "2018-12-09",
+  "title": "GoFデザインパターン",
+  "category": {
+    "order": 2,
+    "name": "Scrap",
+    "url": "/categories/scrap/"
+  },
+  "tags": [
+    {
+      "name": "GoF",
+      "url": "/tags/gof/"
+    },
+    {
+      "name": "デザインパターン",
+      "url": "/tags/design-pattern/"
+    },
+    {
+      "name": "開発全般",
+      "url": "/tags/general-dev/"
+    }
+  ],
+  "content": "GoFの23のデザインパターンのチートシートです。 生成、構造、振る舞いの順に記載 記載している例は、一例にすぎない デザインパターンが絶対というわけではない \u003Cdiv style=\u0022background-color: lightblue;\u0022\u003E工事中の記事\u003C/div\u003E （Abstract Factory） （Builder） （Factory Method） （Prototype） Singleton インスタンスが一つしか生成されないようにする 応用 派生可能にして実体は別にするとか 内部にDictionaryを用意して複数保持できるようにするとか 外部から登録可能な仕組みにするとか classDiagram Singleton *-- Singleton : static変数で保持 Singleton : instance public class MySingleton { public static MySingleton Instance { get; } = new MySingleton(); private MySingleton() { } } // Lazy（ダブルチェックロッキング）で遅延生成にする場合 private static readonly LazyMySingleton __lazy = new LazyMySingleton(() = new MySingleton()); public static MySingleton Instance = __lazy.Value; （Adapter） （Bridge） （Composite） （Decorator） （Facade） （Flyweight） （Proxy） （Chain of Responsibility） （Command） （Interpreter） （Iterator） （Mediator） （Memento） （Observer） State 状態を多態性で表現する 状態の変化（次にどの状態にするか）は誰が管理してもいい classDiagram ねこ *-- ねこ状態 ねこ状態 |-- 眠っている ねこ状態 |-- 走っている ねこ状態 |-- 食べている ねこ状態 |-- 爪をといでいる （Strategy） （Template Method） （Visitor）"
+},{
+  "url": "/articles/f8166079e7ab4762a1b69df4a54fc83f/",
+  "date": "2018-12-08",
+  "title": "[C#] IDisposableなメンバーをまとめて破棄する方法を考えてみる",
+  "category": {
+    "order": 2,
+    "name": "Scrap",
+    "url": "/categories/scrap/"
+  },
+  "tags": [
+    {
+      "name": "C#",
+      "url": "/tags/cs/"
+    }
+  ],
+  "content": "はじめに メンバーにIDisposableなオブジェクトを保持している場合、自分もIDisposableにしてDispose()メソッドで全てのメンバーの破棄処理を行う必要があり、面倒です。 以下のような仕組みを考え、実装してみました。 // こんな感じの仕組みがほしい public class SampleClass : IDisposable { [DisposableMember] private MemoryStream _stream1 = new MemoryStream(); [DisposableMember] private MemoryStream _stream2 = new MemoryStream(); [DisposableMember] private MemoryStream _stream3 = new MemoryStream(); public void Dispose() { // 対象メンバーを自動で破棄する Disposer.DisposeAll(this); } } カスタム属性とリフレクション 仕組みの実装です。リフレクションでまとめて処理します。 // カスタム属性 [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)] public sealed class DisposableMemberAttribute : Attribute { } // 破棄処理用 public static class Disposer { public static void DisposeAll(object obj) { var disposableType = typeof(IDisposable); var type = obj.GetType(); foreach (var fi in type .GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance) .Where(fi = fi.GetCustomAttributeDisposableMemberAttribute() != null)) { if (!disposableType.IsAssignableFrom(fi.FieldType)) { throw new InvalidOperationException(); } DisposeField(obj, fi); } foreach (var pi in type .GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance) .Where(pi = pi.GetCustomAttributeDisposableMemberAttribute() != null)) { if (!disposableType.IsAssignableFrom(pi.PropertyType)) { throw new InvalidOperationException(); } DisposeProperty(obj, pi); } } private static void DisposeField(object obj, FieldInfo fi) { if (fi.GetValue(obj) is IDisposable disposeObj) { disposeObj.Dispose(); fi.SetValue(obj, null); } } private static void DisposeProperty(object obj, PropertyInfo pi) { if (pi.GetValue(obj) is IDisposable disposeObj) { disposeObj.Dispose(); pi.SetValue(obj, null); } } } おわりに リフレクションを使っていますが、もともとDispose等の破棄処理自体がコストがかかるケースが多いため、この方法でもいいのではないかと思っています。 以下の点を改善すれば、より実用的になるかもしれません。 FieldInfoやPropertyInfoはキャッシュする（高速化対応） Disposeする順序やグループを指定できるようにする"
+},{
+  "url": "/articles/2b51eaa06de848fcb569116b82ada4be/",
+  "date": "2018-12-06",
+  "title": "[C#] オブジェクトの状態が勝手に変更されるのを防ぐ方法",
+  "category": {
+    "order": 2,
+    "name": "Scrap",
+    "url": "/categories/scrap/"
+  },
+  "tags": [
+    {
+      "name": "C#",
+      "url": "/tags/cs/"
+    }
+  ],
+  "content": "意図しない箇所でオブジェクトがいつのまにか内容変更されてしまうのを防ぐ方法について記載します。 対策：イミュータブル コンストラクタでのみ状態設定できるようにする手法です。同一インスタンスを持ちまわしても問題なく、またスレッドセーフです。 状態変更するメソッドを用意する場合は、自身の内容は変えず、別インスタンスを戻り値で返すようにします。 対策：ディープコピー 同一インスタンスを持ちまわすのではなく、ディープコピーを使う手法です。 実装方法がいくつかあります。 シリアライズを使う メモリ上にシリアライズ／デシリアライズすることでディープコピーを実現します。ディープコピー手法の中では一番おすすめです。 DataContract属性とMessagePack for C#の組み合わせがいいと思います。 MessagePack https://www.nuget.org/packages/MessagePack/ ICloneable System.ICloneableを実装する方法です。ちなみにICloneable\u003CT\u003Eといったジェネリック版は存在しません。 ICloneable.Clone()メソッドは戻り値がシャロ―コピーかディープコピーか規定しておらず、また戻り値の型がobjectだったりと不便です。 基本的に使用しない方がいいです。 独自クローンメソッド＋MemberwiseClone 独自のクローンメソッドを用意する方法です。結局のところ、実装すべき内容はICloneableを実装する場合と同じです。 継承階層がある場合の実装コストや、今後フィールドが増えた場合のメンテナンスコストがかかります。 メソッド内部でobject.MemberwiseClone（自分のシャロ―コピーを自動生成してくれる）を使えばミュータブルなフィールドのみディープコピーすればいいので、多少楽できます。 独自クローンメソッド＋コピーコンストラクタ 独自のクローンメソッドを用意し、内部ではコピーコンストラクタを使ってインスタンス生成する方法です。 コピーコンストラクタのみ クローンメソッドは用意せず、コピーコンストラクタは用意する方法です。 この方法だと、継承階層があり派生型のオブジェクトを基底型の変数に代入して保持している場合、そこから実体をディープコピーすることはできません。 対策：読み取り専用インターフェイス 読み取り専用インターフェイスを用意する手法です。 interface IReadOnlyPerson { } class Person : IReadOnlyPerson { } この手法の場合、もとのオブジェクトはミュータブルなので、もとのオブジェクトの状態が変われば使用している側にも影響がでます。 対策：ラップ ミュータブルなオブジェクトをラップし、ラップオブジェクトからは読み取り専用の操作しかできないようにする手法です。 ヒープを消費したくない場合、構造体でラップするのを検討してもいいかもしれません。 この手法の場合、もとのオブジェクトはミュータブルなので、もとのオブジェクトの状態が変われば使用している側にも影響がでます。 対策：internal アクセス修飾子をinternalにすることで、別アセンブリからは変更操作をできないようにする手法です。 この手法の場合、もとのオブジェクトはミュータブルなので、もとのオブジェクトの状態が変われば使用している側にも影響がでます。"
+}]

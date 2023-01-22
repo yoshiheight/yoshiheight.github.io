@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    
+            <meta name="robots" content="noindex" />
+        
+    
+            <meta name="robots" content="nofollow" />
+        
+    <meta name="description" content="C#とTypeScriptに関することをメインに書いています。" />
+
+    <title>
+        
+                    Markdownについてざっくりと | Programmer&#39;s Note
+                
+    </title>
+
+    
+            <link rel="stylesheet" href="/sitegen-2.1.0/css/sitegen.css" />
+        
+            <link rel="stylesheet" href="/sitegen-2.1.0/css/sitegen-article.css" />
+        
+
+    <script type="module" src="/sitegen-2.1.0/js/initialize.js"></script>
+
+    
+    <link rel="icon" type="image/png" href="/images/favicon-32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/images/favicon-48.png" sizes="48x48" />
+    <link rel="icon" type="image/png" href="/images/favicon-64.png" sizes="64x64" />
+    <link rel="icon" type="image/png" href="/images/favicon-128.png" sizes="128x128" />
+    <link rel="icon" type="image/png" href="/images/favicon-256.png" sizes="256x256" />
+    <link rel="apple-touch-icon" href="/images/favicon-256.png" sizes="256x256" />
+    <link rel="stylesheet" href="/css/custom-1.0.css" />
+</head>
+<body>
+    <!-- サイトヘッダー -->
+    <header id="sdi-header">
+        <div id="sdi-header-inner">
+            <div id="sdi-site-name"><a href="/">Programmer&#39;s Note</a></div>
+            <div id="sdi-menu">
+                <div class="sdc-menu-section">
+                    
+                                            <div>
+                                                <a href="/categories/demo/">Demo</a>
+                                            </div>
+                                        
+                                            <div>
+                                                <a href="/categories/tech/">Tech</a>
+                                            </div>
+                                        
+                                            <div>
+                                                <a href="/categories/scrap/">Scrap</a>
+                                            </div>
+                                        
+                                            <div>
+                                                <a href="/categories/tests/">Test&#39;s</a>
+                                            </div>
+                                        
+                </div>
+                <div class="sdc-menu-section">
+                    <div>
+                        <a href="/tags/">Tags</a>
+                    </div>
+                    <div>
+                        <a href="/search/">Search</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <div id="sdi-container">
+        <div id="sdi-container-inner">
+            <main>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.6.0/build/styles/base16/nova.min.css" />
+<script type="module">
+    import hljs from "https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.6.0/build/es/highlight.min.js";
+    hljs.highlightAll();
+</script>
+<script type="module">
+    import mermaid from "https://unpkg.com/mermaid@9.1.3/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: true, theme: "base" });
+</script>
+
+<article id="sdi-entry-article">
+    <!-- 記事ヘッダー -->
+    <header>
+        <!-- 記事タイトル -->
+        <h1>Markdownについてざっくりと</h1>
+
+        <div id="sdi-article-header-annotation">
+            <!-- タグ -->
+            <div class="sdc-tags">
+                <div class="sdc-tag sdc-primary-tag sdc-primary-tag1">
+                    <a href="/categories/tech/">Tech</a>
+                </div>
+                
+                                    <div class="sdc-tag">
+                                        <a href="/tags/markdown/">Markdown</a>
+                                    </div>
+                                
+                                    <div class="sdc-tag">
+                                        <a href="/tags/general-dev/">開発全般</a>
+                                    </div>
+                                
+            </div>
+
+            <!-- 日付 -->
+            <time datetime="2020-01-30">2020-01-30</time>
+        </div>
+    </header>
+
+    <!-- 記事内容 -->
+    <div id="sdi-article-body">
+<h3>概要</h3>
+<ul>
+<li>Markdown の記法についてざっくりと記載
+<ul>
+<li>自分がよく使っているもの or 今後使うかもしれないもの</li>
+<li>CommonMark 準拠</li>
+</ul>
+</li>
+</ul>
+<h4>Markdown とは</h4>
+<ul>
+<li>考案
+<ul>
+<li><a href="https://daringfireball.net/projects/markdown/">https://daringfireball.net/projects/markdown/</a></li>
+</ul>
+</li>
+<li>CommonMark
+<ul>
+<li>Markdown の仕様を詳細まで策定しよう、ということでできた Markdown 方言の一つ</li>
+<li><a href="https://commonmark.org/">https://commonmark.org/</a></li>
+</ul>
+</li>
+</ul>
+<h3>見出し</h3>
+<pre><code class="language-md"># 見出し1
+
+## 見出し2
+
+### 見出し3（末尾の連続した#は無視される） ###############
+
+#### 見出し4
+
+##### 見出し5
+
+###### 見出し6
+</code></pre>
+<h3>段落</h3>
+<pre><code class="language-md">前後を空行にすると段落になる。
+
+なので、この行は別段落になる。
+</code></pre>
+<h3>コード</h3>
+<h4>コードブロック</h4>
+<pre><code class="language-md">```
+ここはコードブロックになる。
+```
+</code></pre>
+<pre><code class="language-md">`````````
+バッククォート数は3つ以上でも可。
+終了のバッククォート数は、開始のバッククォート数以上が必要。
+`````````
+</code></pre>
+<pre><code class="language-md">```hoge
+hoge は &lt;code class=&quot;language-hoge&quot;&gt; というように展開される。
+```
+</code></pre>
+<h4>インラインコード</h4>
+<pre><code class="language-md">`ここはインラインコードになる`
+</code></pre>
+<h3>リスト</h3>
+<h4>箇条書き</h4>
+<pre><code class="language-md">* リスト
+    * リスト
+        * リスト
+</code></pre>
+<h4>番号リスト</h4>
+<pre><code class="language-md">1. リスト
+    1. リスト
+        1. リスト
+1. リスト
+</code></pre>
+<h4>リスト間の空行</h4>
+<pre><code class="language-md">1. リスト
+
+1. リスト
+
+
+1. リスト（間に空行を入れることもできるが、その場合、全てのリストアイテムは段落扱いになる）
+</code></pre>
+<h4>リストにブロック要素を含める</h4>
+<pre><code class="language-md">* リスト
+
+    ```
+    あらゆるブロック要素を含めることができる。
+    前後を空行にする。
+    インデントは、属するリストの文言部分のインデントと同じにするか、それプラス3文字分までとする。
+    ```
+
+* リスト
+</code></pre>
+<h3>リンク</h3>
+<h4>そのままリンク</h4>
+<pre><code class="language-md">&lt;URL&gt;
+</code></pre>
+<h4>文言リンク</h4>
+<pre><code class="language-md">[文言](URL)
+</code></pre>
+<h3>画像</h3>
+<h4>alt 文言あり</h4>
+<pre><code class="language-md">![alt文言](URL)
+</code></pre>
+<h4>alt 文言なし</h4>
+<pre><code class="language-md">![](URL)
+</code></pre>
+<h3>引用</h3>
+<pre><code class="language-md">&gt; 引用1
+&gt; &gt; 引用2
+</code></pre>
+<h3>水平線</h3>
+<pre><code class="language-md">******************
+</code></pre>
+<h3>太字</h3>
+<pre><code class="language-md">__太字__
+</code></pre>
+<h3>改行</h3>
+<pre><code class="language-md">末尾にバックスラッシュで改行なので、ここは\
+改行される
+</code></pre>
+<h3>エスケープ</h3>
+<pre><code class="language-md">\# バックスラッシュでエスケープされるので、ここは見出しにはならない
+</code></pre>
+<h3>HTML のブロック要素</h3>
+<pre><code class="language-html">&lt;div&gt;HTMLのブロック要素がそのまま使える。ブロック要素内のMarkdownは処理されない&lt;/div&gt;
+</code></pre>
+<h3>コメント</h3>
+<pre><code class="language-html">&lt;!-- Markdownにはコメントが存在しないので、HTMLコメントで代用する
+生成されるHTMLにはコメントそのものが含まれる
+--&gt;
+</code></pre>
+
+    </div>
+</article>
+            </main>
+        </div>
+    </div>
+
+    <!-- サイトフッター -->
+    <footer id="sdi-footer">
+        <div id="sdi-footer-inner">
+            
+            <!-- プロフィール -->
+            <div style="font-size: 115%; line-height: 1.1;">
+                <div style="display: flex;">
+                    <div style="flex-shrink: 0;">
+                        <img src="/images/favicon-128.png" style="margin-right: 20px; border: 2px solid #e4e4e4; border-radius: 50%;" />
+                    </div>
+                    <div style="padding-top: 5px;">
+                        <div style="display: flex; align-items: flex-end; flex-wrap: wrap; column-gap: 8px;">
+                            <div style="font-size: 110%;">Yoshiheight</div>
+                            <div>/</div>
+                            <div style="font-size: 90%;">Programmer</div>
+                        </div>
+                        <div style="margin: 0.5em 0;">C#とTypeScriptに関することをメインに書いています。</div>
+                        <div style="margin-top: 25px; text-decoration: underline;">
+                            <a href="https://github.com/yoshiheight">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; font-size: 98%;">
+                Generated by <a style="text-decoration: underline;" href="https://github.com/yoshiheight/Sitegen">Sitegen</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

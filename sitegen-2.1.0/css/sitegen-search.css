@@ -1,0 +1,23 @@
+@charset "utf-8";
+
+#sdi-search-form-inner {
+    padding-bottom: 30px;
+    display: flex;
+    column-gap: 3px;
+    /*align-items: center;*/
+}
+
+#sdi-input-search-keyword {
+    font-size: 16px;
+    width: 100%;
+    max-width: 400px;
+}
+
+#sdi-search-button {
+    white-space: nowrap;
+}
+
+/* フッターのちらつき防止 */
+#sdi-footer {
+    visibility: hidden;
+}

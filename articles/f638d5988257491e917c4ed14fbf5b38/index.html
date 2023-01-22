@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    
+            <meta name="robots" content="noindex" />
+        
+    
+            <meta name="robots" content="nofollow" />
+        
+    <meta name="description" content="C#とTypeScriptに関することをメインに書いています。" />
+
+    <title>
+        
+                    [C#] Socketを使ってP2Pでやりとりするチャットアプリを作る | Programmer&#39;s Note
+                
+    </title>
+
+    
+            <link rel="stylesheet" href="/sitegen-2.1.0/css/sitegen.css" />
+        
+            <link rel="stylesheet" href="/sitegen-2.1.0/css/sitegen-article.css" />
+        
+
+    <script type="module" src="/sitegen-2.1.0/js/initialize.js"></script>
+
+    
+    <link rel="icon" type="image/png" href="/images/favicon-32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/images/favicon-48.png" sizes="48x48" />
+    <link rel="icon" type="image/png" href="/images/favicon-64.png" sizes="64x64" />
+    <link rel="icon" type="image/png" href="/images/favicon-128.png" sizes="128x128" />
+    <link rel="icon" type="image/png" href="/images/favicon-256.png" sizes="256x256" />
+    <link rel="apple-touch-icon" href="/images/favicon-256.png" sizes="256x256" />
+    <link rel="stylesheet" href="/css/custom-1.0.css" />
+</head>
+<body>
+    <!-- サイトヘッダー -->
+    <header id="sdi-header">
+        <div id="sdi-header-inner">
+            <div id="sdi-site-name"><a href="/">Programmer&#39;s Note</a></div>
+            <div id="sdi-menu">
+                <div class="sdc-menu-section">
+                    
+                                            <div>
+                                                <a href="/categories/demo/">Demo</a>
+                                            </div>
+                                        
+                                            <div>
+                                                <a href="/categories/tech/">Tech</a>
+                                            </div>
+                                        
+                                            <div>
+                                                <a href="/categories/scrap/">Scrap</a>
+                                            </div>
+                                        
+                                            <div>
+                                                <a href="/categories/tests/">Test&#39;s</a>
+                                            </div>
+                                        
+                </div>
+                <div class="sdc-menu-section">
+                    <div>
+                        <a href="/tags/">Tags</a>
+                    </div>
+                    <div>
+                        <a href="/search/">Search</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <div id="sdi-container">
+        <div id="sdi-container-inner">
+            <main>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.6.0/build/styles/base16/nova.min.css" />
+<script type="module">
+    import hljs from "https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.6.0/build/es/highlight.min.js";
+    hljs.highlightAll();
+</script>
+<script type="module">
+    import mermaid from "https://unpkg.com/mermaid@9.1.3/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: true, theme: "base" });
+</script>
+
+<article id="sdi-entry-article">
+    <!-- 記事ヘッダー -->
+    <header>
+        <!-- 記事タイトル -->
+        <h1>[C#] Socketを使ってP2Pでやりとりするチャットアプリを作る</h1>
+
+        <div id="sdi-article-header-annotation">
+            <!-- タグ -->
+            <div class="sdc-tags">
+                <div class="sdc-tag sdc-primary-tag sdc-primary-tag2">
+                    <a href="/categories/scrap/">Scrap</a>
+                </div>
+                
+                                    <div class="sdc-tag">
+                                        <a href="/tags/cs/">C#</a>
+                                    </div>
+                                
+                                    <div class="sdc-tag">
+                                        <a href="/tags/socket/">Socket</a>
+                                    </div>
+                                
+                                    <div class="sdc-tag">
+                                        <a href="/tags/p2p/">P2P</a>
+                                    </div>
+                                
+            </div>
+
+            <!-- 日付 -->
+            <time datetime="2018-11-29">2018-11-29</time>
+        </div>
+    </header>
+
+    <!-- 記事内容 -->
+    <div id="sdi-article-body">
+<h3>はじめに</h3>
+<p><code>Socket</code>を使って<code>TCP</code>で<code>非同期P2P</code>でやりとりするチャットアプリサンプルを作ってみました。</p>
+<p><img src="/files/tcp-p2p-chat/gui.png" alt="GUIイメージ画像" /></p>
+<h3>構成</h3>
+<p>「通信ライブラリ」と「画面」に分けます。</p>
+<pre><code class="language-plaintext">・通信ライブラリ側
+    ITcpSerializer.cs       送受信するメッセージのシリアライザ用インターフェイス
+    TcpPeer.cs              TCPで非同期P2P通信するクラス
+
+・画面側
+    MainWindow.xaml         画面
+    StringSerializer.cs     メッセージシリアライザ
+</code></pre>
+<h3>通信ライブラリ側</h3>
+<p>送受信するデータのシリアライザは画面側が実装するので、通信ライブラリ側ではインターフェイスを提供します。</p>
+<pre><code class="language-cs">public interface ITcpSerializer&lt;TMessage&gt;
+{
+    void Serialize(Stream stream, TMessage message);
+
+    TMessage Deserialize(Stream stream);
+}
+</code></pre>
+<p><code>TcpPeer</code>は一番重要な送受信する為のクラスです。</p>
+<pre><code class="language-cs">// TCPで非同期P2P通信するクラス
+public sealed class TcpPeer&lt;TMessage&gt; where TMessage : class
+{
+    public event Action&lt;TMessage&gt; Sended;
+    public event Action&lt;TMessage&gt; Recved;
+
+    private Socket _socket;
+
+    private ITcpSerializer&lt;TMessage&gt; _serializer;
+
+    private SynchronizationContext _sc = SynchronizationContext.Current;
+
+    private ConcurrentQueue&lt;TMessage&gt; _sendQueue = new ConcurrentQueue&lt;TMessage&gt;();
+
+    // コンストラクタ（接続待機側で、相手からの接続要求Socketに対して使用）
+    public TcpPeer(Socket socket, ITcpSerializer&lt;TMessage&gt; serializer)
+    {
+        _socket = socket;
+        _serializer = serializer;
+    }
+
+    // コンストラクタ（接続する側で使用）
+    public TcpPeer(ITcpSerializer&lt;TMessage&gt; serializer)
+    {
+        _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+        _serializer = serializer;
+    }
+
+    // 指定のIPアドレス・ポートに接続する
+    public async Task ConnectAsync(string ipAddr, int port)
+    {
+        await Task.Factory.StartNew(() =&gt; _socket.Connect(IPAddress.Parse(ipAddr), port));
+    }
+
+    // 非同期送受信を開始する
+    public async Task StartMessagingAsync()
+    {
+        try
+        {
+            await Task.WhenAll(
+                Task.Factory.StartNew(DoSendMain, TaskCreationOptions.LongRunning),
+                Task.Factory.StartNew(DoRecvMain, TaskCreationOptions.LongRunning));
+        }
+        finally
+        {
+            _socket.Close();
+        }
+    }
+
+    // メッセージ送信
+    public void Send(TMessage message)
+    {
+        _sendQueue.Enqueue(message);
+    }
+
+    // 送信キュー内の全てのメッセージが送信された後、送受信を終了させる
+    public void Terminate()
+    {
+        _sendQueue.Enqueue(null);
+    }
+
+    // 送信メイン
+    private void DoSendMain()
+    {
+        try
+        {
+            using (var stream = new NetworkStream(_socket, FileAccess.Write, false))
+            {
+                while (_socket.Connected)
+                {
+                    if (_sendQueue.TryDequeue(out var message))
+                    {
+                        if (message == null)
+                        {
+                            break;
+                        }
+
+                        _serializer.Serialize(stream, message);
+                        stream.Flush();
+                        _sc.Post(_ =&gt; Sended?.Invoke(message), null);
+                    }
+                    else
+                    {
+                        // CPU占有回避（本来はManualResetEventを使ってキューに追加された時だけ処理する方がいい）
+                        Thread.Sleep(1);
+                    }
+                }
+            }
+        }
+        finally
+        {
+            _socket.Shutdown(SocketShutdown.Send);
+        }
+    }
+
+    // 受信メイン
+    private void DoRecvMain()
+    {
+        try
+        {
+            using (var stream = new NetworkStream(_socket, FileAccess.Read, false))
+            {
+                var peekBuff = new byte[1];
+                while (_socket.Receive(peekBuff, SocketFlags.Peek) &gt; 0)
+                {
+                    var message = _serializer.Deserialize(stream);
+                    _sc.Post(_ =&gt; Recved?.Invoke(message), null);
+                }
+            }
+        }
+        finally
+        {
+            Terminate();
+        }
+    }
+}
+</code></pre>
+<p><code>TcpPeer</code>は実装をシンプルにする為、以下のようにしています。</p>
+<ul>
+<li>送信用と受信用にスレッドを用意
+<ul>
+<li><code>Socket</code>クラスはスレッドセーフなので同期の必要はない</li>
+</ul>
+</li>
+<li><code>Task</code>、<code>async/await</code>を使用</li>
+<li>送信キューを用意</li>
+<li>画面側への通知には<code>SynchronizationContext</code>を使用</li>
+</ul>
+<p>通信終了時の処理フローは以下です。</p>
+<ol>
+<li>自分が送信側をシャットダウン</li>
+<li>相手の受信側が終わる</li>
+<li>相手が送信側シャットダウン</li>
+<li>自分の受信側が終わる</li>
+</ol>
+<h3>画面側</h3>
+<p>送受信に使用するメッセージクラスとシリアライザ（つまり通信プロトコルにあたる部分）は画面側で用意します。</p>
+<p>今回はメッセージクラスは用意せず<code>string</code>をそのまま使うことにして、シリアライザのみ用意します。</p>
+<pre><code class="language-cs">// メッセージシリアライザ
+public sealed class StringSerializer : ITcpSerializer&lt;string&gt;
+{
+    // シリアライズ
+    public void Serialize(Stream stream, string message)
+    {
+        var bytes = Encoding.UTF8.GetBytes(message);
+        // データ長の書き込み
+        stream.WriteByte((byte)bytes.Length);
+        // データの書き込み
+        stream.Write(bytes, 0, bytes.Length);
+    }
+
+    // デシリアライズ
+    public string Deserialize(Stream stream)
+    {
+        // データ長の読み込み
+        var len = stream.ReadByte();
+        // データの読み込み
+        return Encoding.UTF8.GetString(ReadDataFromNetwork(stream, len));
+    }
+
+    // ネットワークストリームからバイト列を読み込む
+    private static byte[] ReadDataFromNetwork(Stream stream, int readLength)
+    {
+        // ネットワークの場合、一度に読み込めるとは限らないのでループする
+        var buffer = new byte[readLength];
+        var readTotal = 0;
+        while (readTotal &lt; readLength)
+        {
+            readTotal += stream.Read(buffer, readTotal, readLength - readTotal);
+        }
+        return buffer;
+    }
+}
+</code></pre>
+<p>画面レイアウトはXAMLで適当に作ってください。</p>
+<pre><code class="language-xml">&lt;Window x:Class=&quot;WpfTcpChat.MainWindow&quot;
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+        mc:Ignorable=&quot;d&quot;
+        Title=&quot;TCP P2P Chat&quot; Height=&quot;250&quot; Width=&quot;300&quot;&gt;
+    &lt;DockPanel&gt;
+        &lt;StackPanel DockPanel.Dock=&quot;Top&quot; Orientation=&quot;Horizontal&quot;&gt;
+            &lt;Button Content=&quot;待機を開始&quot; Click=&quot;WaitButton_Click&quot; Margin=&quot;4&quot; /&gt;
+            &lt;Button Content=&quot;接続&quot; Click=&quot;ConnectButton_Click&quot; Margin=&quot;4&quot; /&gt;
+        &lt;/StackPanel&gt;
+
+        &lt;DockPanel DockPanel.Dock=&quot;Bottom&quot;&gt;
+            &lt;Button DockPanel.Dock=&quot;Right&quot; IsDefault=&quot;True&quot; Content=&quot;送信&quot; Click=&quot;SendButton_Click&quot; /&gt;
+            &lt;TextBox Name=&quot;textboxInput&quot; /&gt;
+        &lt;/DockPanel&gt;
+
+        &lt;TextBox Name=&quot;textboxChatContent&quot;
+                 AcceptsReturn=&quot;True&quot; IsReadOnly=&quot;True&quot; VerticalScrollBarVisibility=&quot;Visible&quot; /&gt;
+    &lt;/DockPanel&gt;
+&lt;/Window&gt;
+</code></pre>
+<p>画面側の処理は通信ライブラリを使うだけで、いたってシンプルです。</p>
+<pre><code class="language-cs">private TcpPeer&lt;string&gt; _peer;
+
+// チャットのメイン処理
+private async void ChatProc()
+{
+    // メッセージを送受信した際のイベント処理
+    _peer.Sended += message =&gt; textboxChatContent.AppendText($&quot;&gt; 自分: {message}\n&quot;);
+    _peer.Recved += message =&gt; textboxChatContent.AppendText($&quot;&gt; 相手: {message}\n&quot;);
+
+    textboxChatContent.AppendText(&quot;チャット開始\n&quot;);
+    await _peer.StartMessagingAsync();
+    textboxChatContent.AppendText(&quot;チャット終了\n&quot;);
+}
+
+// 相手からの接続を待機する
+private async void WaitButton_Click(object sender, RoutedEventArgs e)
+{
+    textboxChatContent.AppendText(&quot;待機中...\n&quot;);
+    var listener = new TcpListener(new IPEndPoint(IPAddress.Any, 10000));
+    listener.Start();
+    var socket = await listener.AcceptSocketAsync();
+    listener.Stop();
+    _peer = new TcpPeer&lt;string&gt;(socket, new StringSerializer());
+
+    ChatProc();
+}
+
+// 相手に接続する
+private async void ConnectButton_Click(object sender, RoutedEventArgs e)
+{
+    textboxChatContent.AppendText(&quot;接続中...\n&quot;);
+    _peer = new TcpPeer&lt;string&gt;(new StringSerializer());
+    await _peer.ConnectAsync(&quot;127.0.0.1&quot;, 10000);
+
+    ChatProc();
+}
+
+// メッセージを送信する
+private void SendButton_Click(object sender, RoutedEventArgs e)
+{
+    if (string.IsNullOrEmpty(textboxInput.Text))
+    {
+        // 終了
+        _peer.Terminate();
+        return;
+    }
+
+    // メッセージ送信
+    _peer.Send(textboxInput.Text);
+    textboxInput.Clear();
+}
+</code></pre>
+<h3>おわりに</h3>
+<p><code>async/await</code>（エイシンク/アウェイト）最高！！</p>
+
+    </div>
+</article>
+            </main>
+        </div>
+    </div>
+
+    <!-- サイトフッター -->
+    <footer id="sdi-footer">
+        <div id="sdi-footer-inner">
+            
+            <!-- プロフィール -->
+            <div style="font-size: 115%; line-height: 1.1;">
+                <div style="display: flex;">
+                    <div style="flex-shrink: 0;">
+                        <img src="/images/favicon-128.png" style="margin-right: 20px; border: 2px solid #e4e4e4; border-radius: 50%;" />
+                    </div>
+                    <div style="padding-top: 5px;">
+                        <div style="display: flex; align-items: flex-end; flex-wrap: wrap; column-gap: 8px;">
+                            <div style="font-size: 110%;">Yoshiheight</div>
+                            <div>/</div>
+                            <div style="font-size: 90%;">Programmer</div>
+                        </div>
+                        <div style="margin: 0.5em 0;">C#とTypeScriptに関することをメインに書いています。</div>
+                        <div style="margin-top: 25px; text-decoration: underline;">
+                            <a href="https://github.com/yoshiheight">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; font-size: 98%;">
+                Generated by <a style="text-decoration: underline;" href="https://github.com/yoshiheight/Sitegen">Sitegen</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
