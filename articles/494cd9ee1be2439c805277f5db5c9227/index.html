@@ -116,94 +116,85 @@
 <script defer src="/files/cvdemo-ts/cvdemo.js?v=9b6b4392aa42418fbdeae5f6607ff23c"></script>
 <div id="demo-loading-progress">Loading...</div>
 <div id="demo-root" style="display: none;">
-    <div>
-        <!-- 処理前の画像 -->
-        <span id="img-src-wrapper" style="margin: 1px;">
-        </span>
-<pre><code>    &lt;!-- 処理後の表示 --&gt;
-    &lt;span style=&quot;margin: 1px;&quot;&gt;
-        &lt;canvas id=&quot;canvas-dst&quot; width=&quot;1&quot; height=&quot;1&quot;&gt;&lt;/canvas&gt;
-    &lt;/span&gt;
-&lt;/div&gt;
-
-&lt;div style=&quot;font-size: 75%;&quot;&gt;
-    &lt;div style=&quot;display: inline-grid; grid-template-columns: auto 5px auto;&quot;&gt;
-        &lt;!-- ガンマ --&gt;
-        &lt;div&gt;
-            &lt;input id=&quot;check-gamma&quot; type=&quot;checkbox&quot; checked /&gt;
-            &lt;label for=&quot;check-gamma&quot;&gt;ガンマ&lt;/label&gt;
-        &lt;/div&gt;
-        &lt;div&gt;&lt;/div&gt;
-        &lt;div&gt;
-            &lt;input id=&quot;range-gamma&quot; type=&quot;range&quot; style=&quot;width: 125px;&quot;
-                   min=&quot;0.5&quot; max=&quot;5.0&quot; step=&quot;0.1&quot; value=&quot;2.0&quot; /&gt;
-            &lt;span id=&quot;span-gamma&quot;&gt;&lt;/span&gt;
-        &lt;/div&gt;
-
-        &lt;!-- コントラスト --&gt;
-        &lt;div&gt;
-            &lt;input id=&quot;check-contrast&quot; type=&quot;checkbox&quot; checked /&gt;
-            &lt;label for=&quot;check-contrast&quot;&gt;コントラスト&lt;/label&gt;
-        &lt;/div&gt;
-        &lt;div&gt;&lt;/div&gt;
-        &lt;div&gt;
-            &lt;input id=&quot;range-contrast&quot; type=&quot;range&quot; style=&quot;width: 125px;&quot;
-                   min=&quot;1.0&quot; max=&quot;15.0&quot; step=&quot;0.1&quot; value=&quot;8.0&quot; /&gt;
-            &lt;span id=&quot;span-contrast&quot;&gt;&lt;/span&gt;
-        &lt;/div&gt;
-
-        &lt;!-- シャープネス --&gt;
-        &lt;div&gt;
-            &lt;input id=&quot;check-sharpness&quot; type=&quot;checkbox&quot; checked /&gt;
-            &lt;label for=&quot;check-sharpness&quot;&gt;シャープネス&lt;/label&gt;
-        &lt;/div&gt;
-        &lt;div&gt;&lt;/div&gt;
-        &lt;div&gt;
-            &lt;input id=&quot;range-sharpness&quot; type=&quot;range&quot; style=&quot;width: 125px;&quot;
-                   min=&quot;0.1&quot; max=&quot;10.0&quot; step=&quot;0.1&quot; value=&quot;3.0&quot; /&gt;
-            &lt;span id=&quot;span-sharpness&quot;&gt;&lt;/span&gt;
-        &lt;/div&gt;
-
-        &lt;!-- モザイク --&gt;
-        &lt;div&gt;
-            &lt;input id=&quot;check-mosaic&quot; type=&quot;checkbox&quot; /&gt;
-            &lt;label for=&quot;check-mosaic&quot;&gt;モザイク&lt;/label&gt;
-        &lt;/div&gt;
-        &lt;div&gt;&lt;/div&gt;
-        &lt;div&gt;
-            &lt;input id=&quot;range-mosaic&quot; type=&quot;range&quot; style=&quot;width: 125px;&quot;
-                   min=&quot;2&quot; max=&quot;30&quot; step=&quot;1&quot; value=&quot;5.0&quot; /&gt;
-            &lt;span id=&quot;span-mosaic&quot;&gt;&lt;/span&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;!-- ディザリング --&gt;
-    &lt;div&gt;
-        &lt;input id=&quot;check-dithering&quot; type=&quot;checkbox&quot; /&gt;
-        &lt;label for=&quot;check-dithering&quot;&gt;ディザリング（8色に減色）&lt;/label&gt;
-    &lt;/div&gt;
-
-    &lt;!-- グレイスケール --&gt;
-    &lt;div&gt;
-        &lt;input id=&quot;check-grayscale&quot; type=&quot;checkbox&quot; /&gt;
-        &lt;label for=&quot;check-grayscale&quot;&gt;グレイスケール&lt;/label&gt;
-    &lt;/div&gt;
-
-    &lt;div id=&quot;require-grayscaled&quot; style=&quot;margin-left: 1.5em;&quot;&gt;
-        &lt;!-- 大津の二値化 --&gt;
-        &lt;div&gt;
-            &lt;input id=&quot;check-binary&quot; type=&quot;checkbox&quot; /&gt;
-            &lt;label for=&quot;check-binary&quot;&gt;大津の二値化&lt;/label&gt;
-        &lt;/div&gt;
-
-        &lt;!-- 重心表示 --&gt;
-        &lt;div&gt;
-            &lt;input id=&quot;check-center&quot; type=&quot;checkbox&quot; /&gt;
-            &lt;label for=&quot;check-center&quot;&gt;重心表示&lt;/label&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
+<div>
+<!-- 処理前の画像 -->
+<span id="img-src-wrapper" style="margin: 1px;">
+</span>
+<!-- 処理後の表示 -->
+<span style="margin: 1px;">
+<canvas id="canvas-dst" width="1" height="1"></canvas>
+</span>
+</div>
+<div style="font-size: 75%;">
+<div style="display: inline-grid; grid-template-columns: auto 5px auto;">
+<!-- ガンマ -->
+<div>
+<input id="check-gamma" type="checkbox" checked />
+<label for="check-gamma">ガンマ</label>
+</div>
+<div></div>
+<div>
+<input id="range-gamma" type="range" style="width: 125px;"
+min="0.5" max="5.0" step="0.1" value="2.0" />
+<span id="span-gamma"></span>
+</div>
+<!-- コントラスト -->
+<div>
+<input id="check-contrast" type="checkbox" checked />
+<label for="check-contrast">コントラスト</label>
+</div>
+<div></div>
+<div>
+<input id="range-contrast" type="range" style="width: 125px;"
+min="1.0" max="15.0" step="0.1" value="8.0" />
+<span id="span-contrast"></span>
+</div>
+<!-- シャープネス -->
+<div>
+<input id="check-sharpness" type="checkbox" checked />
+<label for="check-sharpness">シャープネス</label>
+</div>
+<div></div>
+<div>
+<input id="range-sharpness" type="range" style="width: 125px;"
+min="0.1" max="10.0" step="0.1" value="3.0" />
+<span id="span-sharpness"></span>
+</div>
+<!-- モザイク -->
+<div>
+<input id="check-mosaic" type="checkbox" />
+<label for="check-mosaic">モザイク</label>
+</div>
+<div></div>
+<div>
+<input id="range-mosaic" type="range" style="width: 125px;"
+min="2" max="30" step="1" value="5.0" />
+<span id="span-mosaic"></span>
+</div>
+</div>
+<!-- ディザリング -->
+<div>
+<input id="check-dithering" type="checkbox" />
+<label for="check-dithering">ディザリング（8色に減色）</label>
+</div>
+<!-- グレイスケール -->
+<div>
+<input id="check-grayscale" type="checkbox" />
+<label for="check-grayscale">グレイスケール</label>
+</div>
+<div id="require-grayscaled" style="margin-left: 1.5em;">
+<!-- 大津の二値化 -->
+<div>
+<input id="check-binary" type="checkbox" />
+<label for="check-binary">大津の二値化</label>
+</div>
+<!-- 重心表示 -->
+<div>
+<input id="check-center" type="checkbox" />
+<label for="check-center">重心表示</label>
+</div>
+</div>
+</div>
 </div>
 <h3>ソースコード</h3>
 <h4>HTML</h4>
