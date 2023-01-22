@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    
+            <meta name="robots" content="noindex" />
+        
+    
+            <meta name="robots" content="nofollow" />
+        
+    <meta name="description" content="C#とTypeScriptに関することをメインに書いています。" />
+
+    <title>
+        
+                    [C#] C#でフルスクラッチでテキストエディタを実装してWebAssemblyで動かす | Programmer&#39;s Note
+                
+    </title>
+
+    
+            <link rel="stylesheet" href="/sitegen-2.1.0/css/sitegen.css" />
+        
+            <link rel="stylesheet" href="/sitegen-2.1.0/css/sitegen-article.css" />
+        
+
+    <script type="module" src="/sitegen-2.1.0/js/initialize.js"></script>
+
+    
+    <link rel="icon" type="image/png" href="/images/favicon-32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/images/favicon-48.png" sizes="48x48" />
+    <link rel="icon" type="image/png" href="/images/favicon-64.png" sizes="64x64" />
+    <link rel="icon" type="image/png" href="/images/favicon-128.png" sizes="128x128" />
+    <link rel="icon" type="image/png" href="/images/favicon-256.png" sizes="256x256" />
+    <link rel="apple-touch-icon" href="/images/favicon-256.png" sizes="256x256" />
+    <link rel="stylesheet" href="/css/custom-1.0.css" />
+</head>
+<body>
+    <!-- サイトヘッダー -->
+    <header id="sdi-header">
+        <div id="sdi-header-inner">
+            <div id="sdi-site-name"><a href="/">Programmer&#39;s Note</a></div>
+            <div id="sdi-menu">
+                <div class="sdc-menu-section">
+                    
+                                            <div>
+                                                <a href="/categories/demo/">Demo</a>
+                                            </div>
+                                        
+                                            <div>
+                                                <a href="/categories/scrap/">Scrap</a>
+                                            </div>
+                                        
+                </div>
+                <div class="sdc-menu-section">
+                    <div>
+                        <a href="/tags/">Tags</a>
+                    </div>
+                    <div>
+                        <a href="/search/">Search</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <div id="sdi-container">
+        <div id="sdi-container-inner">
+            <main>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.6.0/build/styles/base16/nova.min.css" />
+<script type="module">
+    import hljs from "https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.6.0/build/es/highlight.min.js";
+    hljs.highlightAll();
+</script>
+<script type="module">
+    import mermaid from "https://unpkg.com/mermaid@9.1.3/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: true, theme: "base" });
+</script>
+
+<article id="sdi-entry-article">
+    <!-- 記事ヘッダー -->
+    <header>
+        <!-- 記事タイトル -->
+        <h1>[C#] C#でフルスクラッチでテキストエディタを実装してWebAssemblyで動かす</h1>
+
+        <div id="sdi-article-header-annotation">
+            <!-- タグ -->
+            <div class="sdc-tags">
+                <div class="sdc-tag sdc-primary-tag sdc-primary-tag0">
+                    <a href="/categories/demo/">Demo</a>
+                </div>
+                
+                                    <div class="sdc-tag">
+                                        <a href="/tags/cs/">C#</a>
+                                    </div>
+                                
+                                    <div class="sdc-tag">
+                                        <a href="/tags/blazor/">Blazor</a>
+                                    </div>
+                                
+            </div>
+
+            <!-- 日付 -->
+            <time datetime="2020-10-14">2020-10-14</time>
+        </div>
+    </header>
+
+    <!-- 記事内容 -->
+    <div id="sdi-article-body">
+<p>以前Qiitaに投稿した記事の再アップです。</p>
+<h3>デモ</h3>
+<p>以下のリンクから試せます。</p>
+<ul>
+<li>&lt;/apps/text-editor/&gt;</li>
+</ul>
+<p>環境によっては表示まで数秒かかります。二回目以降はキャッシュから読み込まれるので、表示に時間はかかりません。</p>
+<p>キャッシュはブラウザの開発ツールから削除可能です。以下はChromeの場合。</p>
+<ul>
+<li>開発ツール &gt; Applicationタブ &gt; Cache &gt; Cache Storage</li>
+</ul>
+<p>※デモを何度か上げなおしているので、エラーになる場合にはキャッシュを削除してみてください</p>
+<h4>動作環境</h4>
+<p>WebAssemblyに対応したブラウザが必要ですが、最近のブラウザであればまず問題ないです。</p>
+<ul>
+<li>自分で確認した環境
+<ul>
+<li>Windows 10 Pro, Chrome/新Edge/Firefox</li>
+<li>Android 10, Chrome（表示と文字入力のみ確認）</li>
+</ul>
+</li>
+</ul>
+<h3>誰向けの記事か</h3>
+<p>以下に興味がある人。</p>
+<ul>
+<li>テキストエディタ/テキストエディタエンジンの実装</li>
+<li>MVPアーキテクチャ（監視コントローラー式）</li>
+<li>差分管理によるUndo/Redo</li>
+<li>IME制御</li>
+<li>メモリ共有を使用したBlazor WebAssembly/JavaScript相互運用</li>
+</ul>
+<p>以下が知りたい人はこの記事はあまり参考にはならないです。</p>
+<ul>
+<li>Blazorでの一般的なSPA開発の情報がほしい人（今回、Razorを使ったUI制御は行っていません）</li>
+</ul>
+<h3>何を作ったか</h3>
+<p>正確にはマルチプラットフォーム対応のテキストエディタエンジンをC#でフルスクラッチで実装し、そのエンジンを使用するサンプルアプリケーションとして、</p>
+<ul>
+<li>Blazor WebAssemblyアプリ</li>
+<li>WinFormsアプリ</li>
+</ul>
+<p>を作成しました。まだ作りかけですが、一通り動くようになったので公開しました。</p>
+<p>タイトルに「WebAssemblyで動かした」とえらそうに書いてしまいましたが、これはBlazor WebAssemblyで簡単に実現できます。ただ、ブラウザでテキストエディタとして動かすにはJavaScript側とやりとりする部分に工夫が必要で、そういった点は参考になると思います。</p>
+<h4>免責</h4>
+<ul>
+<li>成果物は実用目的ではなく研究開発目的なので、基本的な機能しか実装していません</li>
+<li>既存ライブラリは使用せず、既存のテキストエディタの実装を参考にしたわけでもないので、定石を外している部分があるかもしれません</li>
+<li>ASP/Blazor/WebAssembly/Webフロントエンドはあまり詳しくないので、へんなことをしているかもしれません</li>
+<li>メモリ共有を使用したBlazor WebAssembly/JavaScript相互運用ですが、実は公式な情報に基づいた実装は行っていません
+<ul>
+<li>WebAssembly自体の仕様ではメモリ共有可能になっているようなのですが、Blazorでの使い方は公式には記載されていませんでした</li>
+<li>いろいろ調べた結果、Emscripten関連の機能が使用可能だったので、今回強引に使いました（なので今後この方法は使用できなくなる可能性があります）</li>
+</ul>
+</li>
+<li>実装説明は「箇条書き＋ソースコードへのリンク」なので、ざっくりとした説明になっています</li>
+</ul>
+<h4>機能</h4>
+<ul>
+<li>文字入力/編集（日本語入力対応）</li>
+<li>一通りのよくあるカーソル移動（Home/End/PageUp/PageDownとか、Ctrlキーとの組み合わせとか）</li>
+<li>現在行の強調表示</li>
+<li>現在行の位置をスクロールバーに表示</li>
+<li>行番号表示</li>
+<li>タブ挿入</li>
+<li>複数行のタブインデント/インデント解除</li>
+<li>ASCII文字と日本語文字で別々のフォント/サイズの適用</li>
+<li>フォントサイズの倍率変更</li>
+<li>Undo/Redo</li>
+<li>コピー/カット/ペースト</li>
+<li>ダブルクリックによる単語選択、トリプルクリックによる行選択、フォースクリックによる全選択</li>
+</ul>
+<h4>開発動機</h4>
+<ul>
+<li>Blazor WebAssemblyが正式リリースになり、やっとプラグインなしでC#がブラウザで動く時代が来た！これは何か作らねば！と思い</li>
+<li>以前テキストエディタをWinFormsで実装して一時期公開していたが、デスクトップアプリを実行してみてくれる人は皆無で、日の目を見なかったので</li>
+<li>テキストエディタをどこまでシンプルでメンテナンス性の高いコードで実装できるか試したい</li>
+</ul>
+<h3>ソースコード</h3>
+<p>GitHubにアップしました。開発環境はVisual Studio 2019です。</p>
+<p><a href="https://github.com/yoshiheight/Crash.Editor">https://github.com/yoshiheight/Crash.Editor</a></p>
+<p>Blazor WebAssemblyサンプルアプリでは、Webフロントエンドで必要最低限な箇所でjQueryとLodashを使用しているので、package.jsonからパッケージを復元してください。</p>
+<h4>プロジェクト構成</h4>
+<p>サンプリアプリ以外はすべて.NET Standard 2.1クラスライブラリプロジェクトです。</p>
+<ul>
+<li>Crash.Core
+<ul>
+<li>特定のプロジェクトに依存しない汎用ライブラリ</li>
+</ul>
+</li>
+<li>Crash.Core.UI
+<ul>
+<li>1枚のキャンバス内に仮想的にUIエレメント構造を構築する為に即席で作った簡易GUIフレームワーク（2D API描画ベース）</li>
+</ul>
+</li>
+<li>Crash.Editor.Engine.Model
+<ul>
+<li>テキストエディタエンジンのモデル部</li>
+</ul>
+</li>
+<li>Crash.Editor.Engine.Presenter
+<ul>
+<li>テキストエディタエンジンのプレゼンター部</li>
+</ul>
+</li>
+<li>Crash.Editor.Engine.View
+<ul>
+<li>テキストエディタエンジンのビュー部</li>
+</ul>
+</li>
+<li>Sample.BlazorWasm.TextEditor
+<ul>
+<li>Blazor WebAssemblyサンプルアプリ</li>
+</ul>
+</li>
+<li>Sample.WinForms.TextEditor
+<ul>
+<li>WinFormsサンプルアプリ</li>
+</ul>
+</li>
+</ul>
+<h4>アーキテクチャ</h4>
+<p>WinFormsサンプルアプリの方は以下の図のようになっています。</p>
+<pre><code>[エンジン側]                                [WinForms側]
+TextPresenter &lt;――――― Use ――――――    TextEditorControl
+use↓    ↓use       (文字列入力/キー操作)      (UserControl)
+     TextDocument
+      ↑observe
+TextView
+      ↓use/observe                            ↑use/observe
+    ICanvasContext      &lt;---- Impl ----   CanvasContext
+    IOffScreen          &lt;---- Impl ----   OffScreen
+    IFont               &lt;---- Impl ----   Font
+    IInputMethod        &lt;---- Impl ----   InputMethod
+</code></pre>
+<ul>
+<li>キーボード/マウス/フォーカス/IME関連や描画処理は環境に依存する為、その部分をアプリケーション側が提供する仕組み</li>
+<li>Blazor WebAssemblyサンプルアプリの方の図は省略するが、上記に加えてJavaScriptレイヤーがあり、Blazor WebAssembly/JavaScript相互運用でやりとりしている</li>
+<li>ビューもエンジンに含めているので、Blazor WebAssemblyアプリとWinFormsアプリでまったく同じ見た目になっている
+<ul>
+<li>スクロールバーもビューエンジンが描画している</li>
+<li>Blazor WebAssemblyアプリはHTML Canvas 1枚に、WinFormsアプリはUserControl 1枚にUIすべてのパーツを描画している</li>
+</ul>
+</li>
+</ul>
+<h4>全体的な説明</h4>
+<p>以下のようになっています。</p>
+<ul>
+<li>共通ライブラリ（<a href="https://github.com/yoshiheight/Crash.Editor/tree/master/Crash.Core">Crash.Core</a>）
+<ul>
+<li>汎用クラスの集まり</li>
+</ul>
+</li>
+<li>即席簡易GUIフレームワーク（<a href="https://github.com/yoshiheight/Crash.Editor/tree/master/Crash.Core.UI">Crash.Core.UI</a>）
+<ul>
+<li>UI部品の基底クラス、描画時のクリッピング領域保持、レンダリングの枠組みを提供</li>
+<li>汎用UIコントロールとして、スクロールバーはここに用意した</li>
+<li>UIレイアウトの仕組みはなく、UI部品派生クラスが自分で自分の矩形を返す必要がある</li>
+<li>オフスクリーンバッファを使用してスクロール時に差分だけ描画するのをサポートするクラスは以下
+<ul>
+<li><a href="https://github.com/yoshiheight/Crash.Editor/blob/master/Crash.Core.UI/Common/ScrollableOffscreen.cs">ScrollableOffscreen.cs</a></li>
+</ul>
+</li>
+<li>アプリケーション側に提供してもらう機能は以下
+<ul>
+<li><a href="https://github.com/yoshiheight/Crash.Editor/tree/master/Crash.Core.UI/UIContext">Crash.Core.UI/UIContext</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>テキストエディタエンジン
+<ul>
+<li>MVPアーキテクチャ（監視コントローラー式）
+<ul>
+<li>ビューがモデルを監視し、モデルの変更に応じて描画を行う</li>
+<li>プレゼンターはモデルとビューを保持/使用</li>
+<li>アプリケーション側からはプレゼンター経由で操作する</li>
+</ul>
+</li>
+<li>プレゼンター（<a href="https://github.com/yoshiheight/Crash.Editor/tree/master/Crash.Editor.Engine.Presenter">Crash.Editor.Engine.Presenter</a>）
+<ul>
+<li>もともとテキストエディタによくあるキー操作記録機能をこのレイヤーで実現していた（キー操作記録用コマンド/コマンドパターン）
+<ul>
+<li>いまのところ不要と思い、削除</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>モデル（<a href="https://github.com/yoshiheight/Crash.Editor/tree/master/Crash.Editor.Engine.Model">Crash.Editor.Engine.Model</a>）
+<ul>
+<li>データを保持するのは、全体を管理するTextDocumentと行を管理するTextLine
+<ul>
+<li>ビューからは読み取り専用インターフェイスでのみ上記を参照</li>
+<li>変更操作を直接行っているのはUndo/Redoコマンドクラス</li>
+</ul>
+</li>
+<li>行の管理はギャップバッファ
+<ul>
+<li><a href="https://github.com/yoshiheight/Crash.Editor/blob/master/Crash.Core/Collections/GapBuffer.cs">GapBuffer.cs</a></li>
+<li><a href="https://github.com/yoshiheight/Crash.Editor/blob/master/Crash.Core/Collections/InternalGapBuffer.cs">InternalGapBuffer.cs</a>
+<ul>
+<li>ギャップバッファとしての実装とC#のIListとしての実装を分けたかったので、クラスを分けた</li>
+<li>Span/Index/Range等のおかげでかなり簡潔にギャップバッファが実装できた
+<ul>
+<li><a href="https://github.com/yoshiheight/Crash.Editor/blob/master/Crash.Core/Buffers/SpanExtensions.cs">SpanExtensions.cs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>1行内の文字列の管理はただのstring</li>
+<li>Undo/Redoはコマンドパターンで、データ変更の差分はここで保持している
+<ul>
+<li><a href="https://github.com/yoshiheight/Crash.Editor/tree/master/Crash.Editor.Engine.Model/Common/UndoRedo">Common/UndoRedo</a></li>
+<li>実装を楽にするため、レイヤーを2つに分けた
+<ul>
+<li><a href="https://github.com/yoshiheight/Crash.Editor/tree/master/Crash.Editor.Engine.Model/EditCommands/HighLevel">HighLevel</a></li>
+<li><a href="https://github.com/yoshiheight/Crash.Editor/tree/master/Crash.Editor.Engine.Model/EditCommands/LowLevel">LowLevel</a></li>
+</ul>
+</li>
+<li>1文字入力するだけでもコマンドを生成するので、単語単位にするとか工夫した方がいいかもしれない</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>ビュー（<a href="https://github.com/yoshiheight/Crash.Editor/tree/master/Crash.Editor.Engine.View">Crash.Editor.Engine.View</a>）
+<ul>
+<li>内部ではCrash.Core.UIを使用</li>
+<li>モデルに変更があった場合、その変更があった範囲のみを再描画</li>
+<li>描画範囲の文字を列挙しつつ座標とかサイズとかを計算するクラス
+<ul>
+<li><a href="https://github.com/yoshiheight/Crash.Editor/tree/master/Crash.Editor.Engine.View/Common/Measurement">Common/Measurement</a></li>
+</ul>
+</li>
+<li>Measurementで列挙した文字を以下の描画用の文字列保持クラスに詰めなおす
+<ul>
+<li><a href="https://github.com/yoshiheight/Crash.Editor/tree/master/Crash.Editor.Engine.View/Common/Drawer">Common/Drawer</a></li>
+<li>同じフォントの文字、同じ色の文字をまとめて1回で描画する。選択範囲の色も同様</li>
+</ul>
+</li>
+<li>モデルとビューを分けているので、同一内容を分割表示するようなことも、やろうと思えば可能</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Blazor WebAssemblyサンプルアプリ
+<ul>
+<li>文字列入力やキーバインドはアプリケーション側が行う
+<ul>
+<li><a href="https://github.com/yoshiheight/Crash.Editor/blob/master/Sample.BlazorWasm.TextEditor/Shared/TextEditorComponent.razor.cs">TextEditorComponent.razor.cs</a></li>
+</ul>
+</li>
+<li>JavaScript相互運用
+<ul>
+<li>C#側でJavaScript側オブジェクトの参照を保持し（といっても直接ではなくJavaScript側のMapが実際には保持）、インスタンスメソッドを呼び出す仕組みを用意（その逆の仕組みは標準で用意されているが、これは見当たらなかった）
+<ul>
+<li><a href="https://github.com/yoshiheight/Crash.Editor/blob/master/Sample.BlazorWasm.TextEditor/wwwroot/src/Common/Interop/JSObjectReference.ts">JSObjectReference.ts</a></li>
+<li><a href="https://github.com/yoshiheight/Crash.Editor/blob/master/Sample.BlazorWasm.TextEditor/Common/Interop/JSObjectReference.cs">JSObjectReference.cs</a></li>
+</ul>
+</li>
+<li>C#側からJavaScript側のイベントをオブザーバーパターン風に捕捉する仕組みを用意
+<ul>
+<li><a href="https://github.com/yoshiheight/Crash.Editor/blob/master/Sample.BlazorWasm.TextEditor/wwwroot/src/Common/Interop/JSEvent.ts">JSEvent.ts</a></li>
+<li><a href="https://github.com/yoshiheight/Crash.Editor/blob/master/Sample.BlazorWasm.TextEditor/Common/Interop/JSEvent.cs">JSEvent.cs</a></li>
+</ul>
+</li>
+<li>共有メモリを使用したやりとり（ポインタ渡し）
+<ul>
+<li><a href="https://github.com/yoshiheight/Crash.Editor/blob/master/Sample.BlazorWasm.TextEditor/wwwroot/src/Common/Emscripten.ts">Emscripten.ts</a></li>
+</ul>
+</li>
+<li>2D描画は描画命令をJSONとして生成し、そのバッファのポインタをJavaScript側に渡す方法にした（JavaScript相互運用は処理が遅いので、なるべく呼び出し回数を減らした方がいいらしいので。効果のほどは計測してないので不明）
+<ul>
+<li><a href="https://github.com/yoshiheight/Crash.Editor/blob/master/Sample.BlazorWasm.TextEditor/wwwroot/src/Offscreen.ts">Offscreen.ts</a>
+<ul>
+<li>CanvasRenderingContext2Dによる描画</li>
+</ul>
+</li>
+<li><a href="https://github.com/yoshiheight/Crash.Editor/blob/master/Sample.BlazorWasm.TextEditor/UIContextImpl/Offscreen.cs">Offscreen.cs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>IMEはブラウザでは直接制御する方法がないのでtextareaで代用。クリップボード処理もtextarea経由で行う（クリップボード処理ではC#側とは文字列バッファのポインタを使用してやりとり）
+<ul>
+<li><a href="https://github.com/yoshiheight/Crash.Editor/blob/master/Sample.BlazorWasm.TextEditor/wwwroot/src/InputMethod.ts">InputMethod.ts</a></li>
+<li>Z順で普段はcanvasの後ろにいるが、フォーカスは常にtextareaに当てている。IME変換中のみ、Z順がcanvasより前になるようにしている</li>
+<li>textareaをIMEに見せかけるため、レイアウト調整用にラッパーとしてdivを用意している</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>WinFormサンプルアプリ
+<ul>
+<li>文字列入力やキーバインドはアプリケーション側が行う
+<ul>
+<li><a href="https://github.com/yoshiheight/Crash.Editor/blob/master/Sample.WinForms.TextEditor/TextEditorControl.cs">TextEditorControl.cs</a></li>
+</ul>
+</li>
+<li>2D描画はGDI+を使用
+<ul>
+<li><a href="https://github.com/yoshiheight/Crash.Editor/blob/master/Sample.WinForms.TextEditor/UIContextImpl/Offscreen.cs">Offscreen.cs</a></li>
+</ul>
+</li>
+<li>IMEはIMM系のWin32APIを使用
+<ul>
+<li><a href="https://github.com/yoshiheight/Crash.Editor/blob/master/Sample.WinForms.TextEditor/UIContextImpl/InputMethod.cs">InputMethod.cs</a></li>
+</ul>
+</li>
+<li>今回、独自にオフスクリーンバッファを使用する仕組みにしたため、System.Windows.Forms.Control.Invalidate(System.Drawing.Rectangle)によるクリッピングは使用していない</li>
+</ul>
+</li>
+</ul>
+<h4>苦労した点</h4>
+<ul>
+<li>ビューが一番大変
+<ul>
+<li>どのシステムでもそうだがビューにはいろんなしわ寄せが来る</li>
+<li>座標計算が面倒</li>
+</ul>
+</li>
+<li>描画系のバグはなにが原因か特定が難しい
+<ul>
+<li>描画が化けるのが一番やっかい</li>
+<li>ブレークポイントを使ったデバッグだけでは特定できないので、コンソールにログ出力したりとか、一部の処理をコメントアウトして動作の違いから推測したりとか</li>
+<li>イベント発生のタイミングとかもあるので、想定通り動いている箇所を1つ1つ確認していくことで、原因箇所を絞り込んでいったりとか</li>
+</ul>
+</li>
+<li>Blazor WebAssemblyでのデバッグ
+<ul>
+<li>C#コード/TypeScriptコードの両方ともVisual Studioでデバッグできるのは楽なのだが、デバッグが重いのと現時点ではC#側はローカル変数のみしか値の確認ができない（なのでテキストエディタエンジン自体のデバッグはWinFormsサンプルアプリの方で行った）</li>
+</ul>
+</li>
+</ul>
+<h3>今後の対応予定</h3>
+<p>以下の対応までは終わらせたいです（いつになるかわかりませんが）。</p>
+<ul>
+<li>リファクタリング、コメント追加、不具合対応
+<ul>
+<li>他のテキストエディタの実装を見て、参考になる部分の取り入れ</li>
+</ul>
+</li>
+<li>機能面
+<ul>
+<li>シンタックスハイライト
+<ul>
+<li>定義情報はhighlight.jsとかのをインポートできるようにしたい</li>
+</ul>
+</li>
+<li>文字列検索、ヒット箇所のハイライト表示/スクロールバーへの表示</li>
+<li>改行時の自動インデント</li>
+<li>UI部品の色設定</li>
+<li>変更があった行の垂直ルーラーへのマーク表示</li>
+</ul>
+</li>
+</ul>
+<p>以下は、たぶんやらないです。</p>
+<ul>
+<li>サロゲートペア</li>
+<li>印刷向けの描画</li>
+<li>矩形選択</li>
+<li>行の自動折り返し</li>
+<li>横スクロール範囲の計算（現状は行の長さに制限はなく、表示上の限界は1000文字としている）</li>
+<li>Firefoxで日本語文字のベースライン位置がずれる現象の対応（アプリ側で対応できそうだけど面倒なので）</li>
+</ul>
+
+    </div>
+</article>
+            </main>
+        </div>
+    </div>
+
+    <!-- サイトフッター -->
+    <footer id="sdi-footer">
+        <div id="sdi-footer-inner">
+            
+            <!-- プロフィール -->
+            <div style="font-size: 115%; line-height: 1.1;">
+                <div style="display: flex;">
+                    <div style="flex-shrink: 0;">
+                        <img src="/images/favicon-128.png" style="margin-right: 20px; border: 2px solid #e4e4e4; border-radius: 50%;" />
+                    </div>
+                    <div style="padding-top: 5px;">
+                        <div style="display: flex; align-items: flex-end; flex-wrap: wrap; column-gap: 8px;">
+                            <div style="font-size: 110%;">Yoshiheight</div>
+                            <div>/</div>
+                            <div style="font-size: 90%;">Programmer</div>
+                        </div>
+                        <div style="margin: 0.5em 0;">C#とTypeScriptに関することをメインに書いています。</div>
+                        <div style="margin-top: 25px; text-decoration: underline;">
+                            <a href="https://github.com/yoshiheight">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; font-size: 98%;">
+                Generated by <a style="text-decoration: underline;" href="https://github.com/yoshiheight/Sitegen">Sitegen</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
