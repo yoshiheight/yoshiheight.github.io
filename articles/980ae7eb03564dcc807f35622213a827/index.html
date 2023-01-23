@@ -94,6 +94,10 @@
                                         <a href="/tags/wpf/">WPF</a>
                                     </div>
                                 
+                                    <div class="sdc-tag">
+                                        <a href="/tags/memo/">Memo</a>
+                                    </div>
+                                
             </div>
 
             <!-- 日付 -->
@@ -103,53 +107,63 @@
 
     <!-- 記事内容 -->
     <div id="sdi-article-body">
-<h3>デモ</h3>
-<p>カスタムコントロール、ビヘイビア、添付プロパティ
-こういう問題点がありますよ
-一覧にする</p>
-<p>こういう対処を行ってきましたよ
-一覧にする</p>
-<p>ですが、改善が難しいこともありますよ、でしめくくる</p>
+<p>過去にWPFで行ってきたこと。</p>
 <ul>
-<li>WPFの全てについて知ってはいないが、問題になりそうなことは過去に一通り調べたりしたことはあります。
+<li>WPF基本
 <ul>
-<li>WPFの各コントロール</li>
-<li>CollectionViewの使用</li>
-<li>レイアウト Grid/StackPanel/DockPanel/WrapPanel</li>
-<li>ComponentOneのChartを使用したグラフ表示（棒、折れ線、箱ひげ図、ヒートマップ）</li>
-<li>カスタムコントロール/依存関係プロパティ</li>
-<li>ReactiveProperty/リアクティブプログラミング</li>
+<li>WPFで一般的によく使われるコントロールを使用しての画面作成</li>
+<li>レイアウトの使用 Grid、StackPanel、DockPanel、WrapPanel</li>
+<li>TreeView、DataGridの使用</li>
+<li>DataGrid + CollectionViewを使用してのソート/フィルター表示</li>
+<li>ComponentOneのChartを使用したグラフ表示（棒、折れ線、箱ひげ図、散布図）</li>
+<li>テンプレート DataTemplate、ControlTemplate</li>
+<li>ユーザーコントロール、カスタムコントロールの作成
+<ul>
+<li>依存関係プロパティ、添付プロパティ</li>
+</ul>
+</li>
+<li>コントロールの共通スタイル定義</li>
+<li>ビヘイビア、トリガー/アクションの作成</li>
+<li>各種Converterの作成（XAMLでのバインド時の値変換）</li>
+<li>ReactivePropertyを使用したリアクティブプログラミング</li>
 <li>Messengerパターンを使用したViewModelからViewへの通知</li>
-<li>DIを使用したViewModelへのModelの渡し方</li>
-<li>WebAPIを使用したViewModelからのModelの操作</li>
-<li>Converter作成</li>
-<li>DataTemplate、ControlTemplate</li>
-<li>共通スタイル定義</li>
+<li>MVVM Light Toolkit（軽量MVVMライブラリ）の使用</li>
+<li>DIの使用（ViewModelへのModel/Logicの注入）</li>
+<li>WebAPIクライアントの使用（フロントエンドがWPF、バックエンドがWebAPIの場合）</li>
+</ul>
+</li>
+<li>WPF問題点
+<ul>
+<li>Windowsフォームと比較して、パフォーマンスの問題が出やすい部分がある
+<ul>
+<li>DataGridで大量のデータを表示する場合等</li>
+</ul>
+</li>
+<li>Windowsフォームは即時描画、WPFは遅延描画なので、コード側で実行した処理に対する遅延やタイミングの問題が出ることも</li>
+<li>レイアウトの仕組みがHTMLのように子要素で親要素のサイズが決まる為、初期表示が遅いこともある</li>
+<li>XAMLの書き方の自由度が高い為、どういう風にでも書けてしまう</li>
+<li>守備範囲が広く、覚えなければならないことが多い</li>
+</ul>
+</li>
+<li>問題点対処
+<ul>
+<li>仮想化を使う、データ生成後のバインド等で回避</li>
+<li>Dispatcherを使用して非同期の調整</li>
+<li>場合によってはレイアウトを使わず座標決め打ちでコントロールの配置を検討</li>
+<li>XAMLの書き方の統一、部品の共通化</li>
 </ul>
 </li>
 <li>補足
 <ul>
 <li>Prismといった大規模開発向けのMVVMフレームワークの導入経験はない
 <ul>
-<li>(Prismが使用されている現場で、PrismのRegionに埋め込む子画面側の開発担当だった為)</li>
+<li>Prismが使用されている現場で、PrismのRegionに埋め込む子画面側の開発担当だった為</li>
 </ul>
 </li>
-<li>すべてについて実装を経験したわけではないが、全体像は把握しているので、都度しらべて対処</li>
-<li>正解がない、判断が難しい部分の多いので、複数の選択肢を提案しますので、相談して決めていく</li>
+<li>WPFの全てを経験したわけではないが、通常開発で使われる部分は一通り実装/調査したことがある</li>
+<li>WPFを使用すれば他のGUIフレームワークの問題がすべて解決するわけではなく、WPF独自の問題点もあり、解決/判断が難しい部分もある</li>
 </ul>
 </li>
-<li>WPF問題点
-<ul>
-<li>Windowsフォームと比較して、パフォーマンスの問題が出やすい部分もある</li>
-<li>DataGrid/Chartで大量のデータを表示する場合</li>
-<li>XAMLの書き方（どういう風にでもかける）</li>
-<li>レイアウトのしくみ（HTMLレンダリングの様に子要素で親要素のサイズが決まる）</li>
-<li>テンプレート</li>
-<li>コードビハインド、ビヘイビア/アクション/トリガー</li>
-</ul>
-</li>
-<li>Windowsフォームが即時描画、WPFは遅延描画なので、コード側で実行した処理に対する遅延やタイミングの問題が出ることも</li>
-<li>守備範囲が広い、覚えなければならないことが多い</li>
 </ul>
 
     </div>
